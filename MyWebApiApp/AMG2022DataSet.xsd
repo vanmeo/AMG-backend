@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="AMG2022DataSet" targetNamespace="http://tempuri.org/AMG2022DataSet.xsd" xmlns:mstns="http://tempuri.org/AMG2022DataSet.xsd" xmlns="http://tempuri.org/AMG2022DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=DESKTOP-MQJ72FG;Initial Catalog=AMG2022;Integrated Security=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="desktop-mqj72fg.AMG2022.dbo" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="AMG2022DataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="AMG2022DataSet" msprop:Generator_UserDSName="AMG2022DataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Tonghopkenh" msprop:Generator_TableClassName="TonghopkenhDataTable" msprop:Generator_TableVarName="tableTonghopkenh" msprop:Generator_RowChangedName="TonghopkenhRowChanged" msprop:Generator_TablePropName="Tonghopkenh" msprop:Generator_RowDeletingName="TonghopkenhRowDeleting" msprop:Generator_RowChangingName="TonghopkenhRowChanging" msprop:Generator_RowEvHandlerName="TonghopkenhRowChangeEventHandler" msprop:Generator_RowDeletedName="TonghopkenhRowDeleted" msprop:Generator_RowClassName="TonghopkenhRow" msprop:Generator_UserTableName="Tonghopkenh" msprop:Generator_RowEvArgName="TonghopkenhRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="STT" msprop:Generator_ColumnVarNameInTable="columnSTT" msprop:Generator_ColumnPropNameInRow="STT" msprop:Generator_ColumnPropNameInTable="STTColumn" msprop:Generator_UserColumnName="STT" type="xs:string" minOccurs="0" />
+              <xs:element name="Thongtinkenh" msprop:Generator_ColumnVarNameInTable="columnThongtinkenh" msprop:Generator_ColumnPropNameInRow="Thongtinkenh" msprop:Generator_ColumnPropNameInTable="ThongtinkenhColumn" msprop:Generator_UserColumnName="Thongtinkenh" type="xs:string" minOccurs="0" />
+              <xs:element name="Trangthai" msprop:Generator_ColumnVarNameInTable="columnTrangthai" msprop:Generator_ColumnPropNameInRow="Trangthai" msprop:Generator_ColumnPropNameInTable="TrangthaiColumn" msprop:Generator_UserColumnName="Trangthai" type="xs:string" minOccurs="0" />
+              <xs:element name="Donvi" msprop:Generator_ColumnVarNameInTable="columnDonvi" msprop:Generator_ColumnPropNameInRow="Donvi" msprop:Generator_ColumnPropNameInTable="DonviColumn" msprop:Generator_UserColumnName="Donvi" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
