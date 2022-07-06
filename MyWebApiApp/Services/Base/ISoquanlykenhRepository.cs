@@ -15,5 +15,6 @@ namespace AMGAPI.Services.Base
         bool Update(Soquanlykenh Sokenh, string tencanbosua);
         bool Delete(string id, string tencanbo);
         Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai,string tencanbo);
+        bool Themdanhsachnguoidung(string idkenh, string idcanbotao, string filename);
     }
 }

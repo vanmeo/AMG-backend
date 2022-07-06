@@ -8,20 +8,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace AMGAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SoquanlykenhController : ControllerBase
     {
 
         private readonly ISoquanlykenhRepository _SoquanlykenhRepository;
-
-        public SoquanlykenhController(ISoquanlykenhRepository SoquankenhRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public SoquanlykenhController(ISoquanlykenhRepository SoquankenhRepository, IWebHostEnvironment webHostEnvironment)
         {
             _SoquanlykenhRepository = SoquankenhRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
         public IActionResult GetAll()
@@ -113,6 +116,25 @@ namespace AMGAPI.Controllers
             catch (Exception ex)
             {
                 return Content(ex.Message);//StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult UploadDsnguoidung(IFormFile file, string idsokenh, string idcanbotao)
+        {
+            try
+            {
+                string filepath = Path.Combine(_webHostEnvironment.ContentRootPath, "UploadFiles", file.FileName);
+                using (var stream = new FileStream(filepath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                _SoquanlykenhRepository.Themdanhsachnguoidung(idsokenh, idcanbotao, filepath);
+                return Ok("Success");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
             }
         }
     }

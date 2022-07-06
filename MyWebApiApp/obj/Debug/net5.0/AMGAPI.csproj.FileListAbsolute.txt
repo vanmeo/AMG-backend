@@ -306,4 +306,8 @@ D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\scopedcss\bundle\AMG
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.RazorTargetAssemblyInfo.cache
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.csproj.CopyComplete
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.genruntimeconfig.cache
+D:\Code\AMG\InGate_amg_backend\MyWebApiApp\bin\Debug\net5.0\EPPlus.dll
+D:\Code\AMG\InGate_amg_backend\MyWebApiApp\bin\Debug\net5.0\EPPlus.Interfaces.dll
+D:\Code\AMG\InGate_amg_backend\MyWebApiApp\bin\Debug\net5.0\EPPlus.System.Drawing.dll
+D:\Code\AMG\InGate_amg_backend\MyWebApiApp\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.csproj.AssemblyReference.cache

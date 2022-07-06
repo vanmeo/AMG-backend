@@ -1,6 +1,7 @@
 ﻿using AMGAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -27,9 +28,11 @@ namespace AMGAPI.Data
         public Guid CanboId { get; set; }
         public DateTime? Ngaytao { get; set; }
         public DateTime? Ngaysua { get; set; }
-
+        public bool Trangthai { get; set; }
         //relationship
         public virtual Soquanlykenh Sokenh { get; set; }
+        [Required]
+        [DefaultValue("false")]
         public virtual Canbo Canbo { get; set; }
 
     }

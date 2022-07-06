@@ -1,8 +1,10 @@
 ﻿using AMGAPI.Data;
 using AMGAPI.Models;
 using AMGAPI.Services.Base;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +18,7 @@ namespace AMGAPI.Services
             _context = context;
         }
         // Thêm mới danh mục với ViewModel cho trước
-        public Soquanlykenh Add(SoquanlykenhVM soquanlykenhvm,string tencanbotaomoi)
+        public Soquanlykenh Add(SoquanlykenhVM soquanlykenhvm, string tencanbotaomoi)
         {
             var _Sokenh = new Soquanlykenh
             {
@@ -30,7 +32,7 @@ namespace AMGAPI.Services
                 UngdungId = soquanlykenhvm.UngdungId,
                 Ngayvaoso = soquanlykenhvm.Ngayvaoso,
                 Trangthai = soquanlykenhvm.Trangthai,
-                Log_process= "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới bởi: " + tencanbotaomoi
+                Log_process = "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới bởi: " + tencanbotaomoi
             };
             _context.Add(_Sokenh);
             _context.SaveChanges();
@@ -43,7 +45,7 @@ namespace AMGAPI.Services
             if (_sokenh != null)
             {
                 _sokenh.is_Delete = true;
-                _sokenh.Log_process = _sokenh.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " xóa bởi: " + tencanboxoa;
+                _sokenh.Log_process = _sokenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " xóa bởi: " + tencanboxoa;
                 _context.SaveChanges();
                 return true;
             }
@@ -76,13 +78,52 @@ namespace AMGAPI.Services
                 tt = "hủy kích hoạt";
             if (_Soquanlykenh != null)
             {
-                _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái "+tt+" bởi: " + tencanbo;
+                _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái " + tt + " bởi: " + tencanbo;
                 _Soquanlykenh.Trangthai = trangthai;
                 _context.SaveChanges();
                 return _Soquanlykenh;
             }
             return null;
         }
+
+        public bool Themdanhsachnguoidung(string idkenh, string idcanbotao, string filename)
+        {
+            List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
+            var package = new ExcelPackage(new FileInfo(filename));
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
+            {
+                try
+                {
+                    int j = 1;
+                    string name = workSheet.Cells[i, j++].Value.ToString();
+                    string sodienthoai = workSheet.Cells[i, j++].Value.ToString();
+                    Danhsachnguoidung user = new Danhsachnguoidung()
+                    {
+                        Ten = name,
+                        Sodienthoai = sodienthoai,
+                        SokenhId = Guid.Parse(idkenh),
+                        CanboId = Guid.Parse(idcanbotao),
+                        Ngaytao = DateTime.UtcNow,
+                        Ngaysua = DateTime.UtcNow,
+                       
+                    };
+
+                    _context.Add(user);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
         public bool Update(Soquanlykenh Sokenh, string tencanbosua)
         {
             var _Sokenh = _context.Soquanlykenhs.SingleOrDefault(cb => cb.Id == Sokenh.Id);
@@ -99,7 +140,7 @@ namespace AMGAPI.Services
                 _Sokenh.UngdungId = Sokenh.UngdungId;
                 _Sokenh.Ngayvaoso = Sokenh.Ngayvaoso;
                 _Sokenh.Trangthai = Sokenh.Trangthai;
-                _Sokenh.Log_process+= "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chỉnh sửa bởi: " + tencanbosua;
+                _Sokenh.Log_process += "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chỉnh sửa bởi: " + tencanbosua;
                 _context.SaveChanges();
                 return true;
             }
