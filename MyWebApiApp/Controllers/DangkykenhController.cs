@@ -13,7 +13,7 @@ namespace AMGAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DangkykenhController : ControllerBase
     {
 
@@ -58,7 +58,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, Dangkykenh Dangkykenh)
+        public IActionResult Update(string id, Dangkykenh Dangkykenh, string tencanbosua)
         {
             if (id != Dangkykenh.Id.ToString())
             {
@@ -66,7 +66,7 @@ namespace AMGAPI.Controllers
             }
             try
             {
-                _DangkykenhRepository.Update(Dangkykenh);
+                _DangkykenhRepository.Update(Dangkykenh,tencanbosua);
                 return NoContent();
             }
             catch
@@ -76,11 +76,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string tencanboxoa)
         {
             try
             {
-                _DangkykenhRepository.Delete(id);
+                _DangkykenhRepository.Delete(id,tencanboxoa);
                 return Ok();
             }
             catch
@@ -91,11 +91,11 @@ namespace AMGAPI.Controllers
        
         [HttpPut("ChangeStatus")]
 
-        public IActionResult ChangeStatus(string idkenh, int trangthai)
+        public IActionResult ChangeStatus(string idkenh, int trangthai,string tencanbothaydoi)
         {
             try
             {
-                return Ok(_DangkykenhRepository.ThaydoiTrangthai(idkenh, trangthai));
+                return Ok(_DangkykenhRepository.ThaydoiTrangthai(idkenh, trangthai,tencanbothaydoi));
             }
             catch (Exception ex)
             {

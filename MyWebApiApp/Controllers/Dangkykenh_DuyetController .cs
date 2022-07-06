@@ -13,7 +13,7 @@ namespace AMGAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class Dangkykenh_DuyetController : ControllerBase
     {
 
@@ -58,7 +58,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, Dangkykenh_Duyet Dangkykenh_duyet)
+        public IActionResult Update(string id, Dangkykenh_Duyet Dangkykenh_duyet, string tencanbosua)
         {
             if (id != Dangkykenh_duyet.Id.ToString())
             {
@@ -66,7 +66,7 @@ namespace AMGAPI.Controllers
             }
             try
             {
-                _Dangkykenh_DuyetRepository.Update(Dangkykenh_duyet);
+                _Dangkykenh_DuyetRepository.Update(Dangkykenh_duyet,tencanbosua);
                 return NoContent();
             }
             catch
@@ -76,11 +76,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id,string tencanbosua)
         {
             try
             {
-                _Dangkykenh_DuyetRepository.Delete(id);
+                _Dangkykenh_DuyetRepository.Delete(id,tencanbosua);
                 return Ok();
             }
             catch
@@ -89,11 +89,11 @@ namespace AMGAPI.Controllers
             }
         }
         [HttpPost("Vaosokenh")]
-        public IActionResult Vaosoquanlykenh(string idKenh, SoquanlykenhVM Soquanlykenh)
+        public IActionResult Vaosoquanlykenh(string idKenh, SoquanlykenhVM Soquanlykenh, string tencanbo)
         {
             try
             {
-                return Ok(_Dangkykenh_DuyetRepository.Vaosoquanlykenh(idKenh, Soquanlykenh));
+                return Ok(_Dangkykenh_DuyetRepository.Vaosoquanlykenh(idKenh, Soquanlykenh,tencanbo));
             }
             catch (Exception ex)
             {

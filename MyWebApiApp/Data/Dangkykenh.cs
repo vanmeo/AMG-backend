@@ -36,6 +36,7 @@ namespace AMGAPI.Data
         [Required]
         public int Trangthai { get; set; }
         public DateTime? Ngayduyet { get; set; }
+        public string? Log_process { get; set; }
         [Required]
         public bool is_Delete { get; set; }
         // public Guid? ID_Nguoiduyet { get; set; }

@@ -13,9 +13,9 @@ namespace AMGAPI.Services.Base
         List<Dangkykenh> GetAll();
         Dangkykenh GetById(string id);
         Dangkykenh Add(DangkykenhVM Dangkykenh);
-        bool Update(Dangkykenh Dangkykenh);
-        bool Delete(string id);
-        Dangkykenh ThaydoiTrangthai(string idkenh, int trangthai);
+        bool Update(Dangkykenh Dangkykenh, string tennguoisua);
+        bool Delete(string id, string Tennguoixoa);
+        Dangkykenh ThaydoiTrangthai(string idkenh, int trangthai, string tencanbothaydoi);
         Dangkykenh_Duyet DuyetKenh(string idkenh, Dangkykenh_DuyetVM Dangkykenh);
     }
 }

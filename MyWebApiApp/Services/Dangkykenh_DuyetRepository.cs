@@ -35,13 +35,14 @@ namespace AMGAPI.Services
             return _Dangkykenh_duyet;
         }
         // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
-        public bool Delete(string id)
+        public bool Delete(string id, string tennguoixoa)
         {
             var Dangkykenh = _context.Dangkykenhs.SingleOrDefault(dk => dk.Id.ToString() == id);
             if (Dangkykenh != null)
             {
                 Dangkykenh.is_Delete = true;
                 Dangkykenh.Ngaysua = DateTime.UtcNow;
+                Dangkykenh.Log_process=Dangkykenh.Log_process+  "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " xóa bởi: " + tennguoixoa;
                 _context.SaveChanges();
                 return true;
             }
@@ -64,7 +65,7 @@ namespace AMGAPI.Services
             }
             return Dangkykenh_duyet;
         }
-        public bool Update(Dangkykenh_Duyet Dangkykenh_duyet)
+        public bool Update(Dangkykenh_Duyet Dangkykenh_duyet, string tencanbosua)
         {
             var _Dangkykenh_duyet = _context.Dangkykenh_Duyets.SingleOrDefault(cb => cb.Id == Dangkykenh_duyet.Id);
             if (_Dangkykenh_duyet != null)
@@ -78,6 +79,7 @@ namespace AMGAPI.Services
                 _Dangkykenh_duyet.Ngaysua = DateTime.UtcNow;
                 _Dangkykenh_duyet.ID_Canboduyet = Dangkykenh_duyet.ID_Canboduyet;
                 _Dangkykenh_duyet.UngdungId = Dangkykenh_duyet.UngdungId;
+                _Dangkykenh_duyet.Log_process =_Dangkykenh_duyet.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chỉnh sửa bởi: " + tencanbosua;
                 _context.SaveChanges();
                 return true;
             }
@@ -85,13 +87,15 @@ namespace AMGAPI.Services
 
         }
 
-        public Soquanlykenh Vaosoquanlykenh(string idkenhduyet, SoquanlykenhVM soquanlykenh)
+        public Soquanlykenh Vaosoquanlykenh(string idkenhduyet, SoquanlykenhVM soquanlykenh,string tencanbovaoso)
         {
             var _Dangkykenh_duyet = _context.Dangkykenh_Duyets.SingleOrDefault(kenh => kenh.Id.ToString() == idkenhduyet);
+           
             if (_Dangkykenh_duyet != null)
             {
                 _Dangkykenh_duyet.Trangthai = true;
                 _Dangkykenh_duyet.Ngaysua = DateTime.UtcNow;
+                _Dangkykenh_duyet.Log_process= _Dangkykenh_duyet.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " Vào sổ quản lý bởi: " + tencanbovaoso;
                 _context.SaveChanges();
                 Soquanlykenh _so = new Soquanlykenh();
                 _so.TenUngdung = soquanlykenh.TenUngdung;
@@ -106,6 +110,7 @@ namespace AMGAPI.Services
                 _so.Ngaysua = DateTime.UtcNow;
                 _so.is_Delete = false;
                 _so.Dangkykenh_DuyetId = _Dangkykenh_duyet.Id;
+                _so.Log_process = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới vào sổ bởi: " + tencanbovaoso;
                 _context.Add(_so);
                 _context.SaveChanges();
                 return _so;

@@ -34,6 +34,7 @@ namespace AMGAPI.Data
         [DefaultValue(false)]
         //0: chua vao so; 1:vao so
         public bool Trangthai { get; set; }
+        public string? Log_process { get; set; }
         //relationship
         public virtual DmUngdung Ungdung { get; set; }
         [ForeignKey("ID_Canboduyet")]

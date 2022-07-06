@@ -18,6 +18,7 @@ namespace AMGAPI.Services
         // Thêm mới danh mục với ViewModel cho trước
         public Dangkykenh Add(DangkykenhVM dangkykenhvm)
         {
+            Canbo canbodangky = _context.Canbos.SingleOrDefault(p => p.Id == dangkykenhvm.ID_Canbodangky);
             var _Dangkykenh = new Dangkykenh
             {
                 TenNguoidangky = dangkykenhvm.TenNguoidangky,
@@ -31,21 +32,22 @@ namespace AMGAPI.Services
                 ID_Canbodangky = dangkykenhvm.ID_Canbodangky,
                 Ngayduyet = dangkykenhvm.Ngayduyet,
                 is_Delete = dangkykenhvm.is_Delete,
-                Trangthai = dangkykenhvm.Trangthai
-            };
+                Trangthai = dangkykenhvm.Trangthai,
+                Log_process= DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo bởi: "+canbodangky.Tendaydu
+        };
             _context.Add(_Dangkykenh);
             _context.SaveChanges();
             return _Dangkykenh;
         }
         // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
-        public bool Delete(string id)
+        public bool Delete(string id,string Tennguoixoa)
         {
             var Dangkykenh = _context.Dangkykenhs.SingleOrDefault(dk => dk.Id.ToString() == id);
             if (Dangkykenh != null)
             {
                 Dangkykenh.is_Delete = true;
                 Dangkykenh.Ngaysua = DateTime.UtcNow;
-                Dangkykenh.LogProcess = Dangkykenh.LogProcess;
+                Dangkykenh.Log_process = Dangkykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " xóa bởi: " + Tennguoixoa;
                 _context.SaveChanges();
                 return true;
             }
@@ -73,9 +75,11 @@ namespace AMGAPI.Services
 
             if (_Dangkykenh != null)
             {
+                Canbo canboduyet=_context.Canbos.SingleOrDefault(p => p.Id== dangkykenhduyetvm.ID_Canboduyet);
                 _Dangkykenh.Trangthai = 1;
                 _Dangkykenh.Ngayduyet = DateTime.UtcNow;
                 _Dangkykenh.Ngaysua = DateTime.UtcNow;
+                _Dangkykenh.Log_process = _Dangkykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " duyệt bởi: " + canboduyet.Tendaydu;
                 _context.SaveChanges();
                 Dangkykenh_Duyet _Dangkykenh_duyet = new Dangkykenh_Duyet();
                 _Dangkykenh_duyet.Canbothamdinh = dangkykenhduyetvm.Canbothamdinh;
@@ -87,14 +91,20 @@ namespace AMGAPI.Services
                 _Dangkykenh_duyet.Ngaysua = DateTime.UtcNow;
                 _Dangkykenh_duyet.ID_Canboduyet = dangkykenhduyetvm.ID_Canboduyet;
                 _Dangkykenh_duyet.UngdungId = dangkykenhduyetvm.UngdungId;
+                _Dangkykenh_duyet.Log_process = "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới và duyệt bởi: " + canboduyet.Tendaydu; 
                 _context.Add(_Dangkykenh_duyet);
                 _context.SaveChanges();
                 return _Dangkykenh_duyet;
             }
             return null;
         }
-        public Dangkykenh ThaydoiTrangthai(string idkenh, int trangthai)
+        public Dangkykenh ThaydoiTrangthai(string idkenh, int trangthai, string tencanbothaydoi)
         {
+            var tt = "duyệt";
+            if (trangthai == 0)
+                tt = "chưa duyệt";
+            if (trangthai == 2)
+                tt = "không duyệt";
             var _Dangkykenh = _context.Dangkykenhs.SingleOrDefault(kenh => kenh.Id.ToString() == idkenh);
 
             if (_Dangkykenh != null)
@@ -102,15 +112,17 @@ namespace AMGAPI.Services
                 _Dangkykenh.Trangthai = trangthai;
                 if (trangthai == 1)
                 {
+
                     _Dangkykenh.Ngayduyet = DateTime.UtcNow;
                 }
                 _Dangkykenh.Ngaysua = DateTime.UtcNow;
+                _Dangkykenh.Log_process = _Dangkykenh.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển sang trạng thái "+tt+" bởi: " + tencanbothaydoi;
                 _context.SaveChanges();
                 return _Dangkykenh;
             }
             return null;
         }
-        public bool Update(Dangkykenh Dangkykenh)
+        public bool Update(Dangkykenh Dangkykenh, string tennguoisua)
         {
             var _Dangkykenh = _context.Dangkykenhs.SingleOrDefault(cb => cb.Id == Dangkykenh.Id);
 
@@ -128,6 +140,7 @@ namespace AMGAPI.Services
                 _Dangkykenh.is_Delete = Dangkykenh.is_Delete;
                 _Dangkykenh.Ngayduyet = Dangkykenh.Ngayduyet;
                 _Dangkykenh.Trangthai = Dangkykenh.Trangthai;
+                _Dangkykenh.Log_process = _Dangkykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chỉnh sửa bởi: " + tennguoisua;
                 _context.SaveChanges();
                 return true;
             }

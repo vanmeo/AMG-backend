@@ -11,9 +11,9 @@ namespace AMGAPI.Services.Base
     { 
         List<Soquanlykenh> GetAll();
         Soquanlykenh GetById(string id);
-        Soquanlykenh Add(SoquanlykenhVM Sokenh);
-        bool Update(Soquanlykenh Sokenh);
-        bool Delete(string id);
-        Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai);
+        Soquanlykenh Add(SoquanlykenhVM Sokenh, string tencanbotao);
+        bool Update(Soquanlykenh Sokenh, string tencanbosua);
+        bool Delete(string id, string tencanbo);
+        Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai,string tencanbo);
     }
 }

@@ -58,7 +58,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, Soquanlykenh Sokenh)
+        public IActionResult Update(string id, Soquanlykenh Sokenh,string tencanbosua)
         {
             if (id != Sokenh.Id.ToString())
             {
@@ -66,7 +66,7 @@ namespace AMGAPI.Controllers
             }
             try
             {
-                _SoquanlykenhRepository.Update(Sokenh);
+                _SoquanlykenhRepository.Update(Sokenh,tencanbosua);
                 return NoContent();
             }
             catch
@@ -76,11 +76,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id,string tencanboxoa)
         {
             try
             {
-                _SoquanlykenhRepository.Delete(id);
+                _SoquanlykenhRepository.Delete(id,tencanboxoa);
                 return Ok();
             }
             catch
@@ -91,11 +91,11 @@ namespace AMGAPI.Controllers
        
        
         [HttpPost]
-        public IActionResult Add(SoquanlykenhVM Soquanly)
+        public IActionResult Add(SoquanlykenhVM Soquanly,string tencanbotao)
         {
             try
             {
-                return Ok(_SoquanlykenhRepository.Add(Soquanly));
+                return Ok(_SoquanlykenhRepository.Add(Soquanly, tencanbotao));
             }
             catch (Exception ex)
             {
@@ -104,11 +104,11 @@ namespace AMGAPI.Controllers
         }
         [HttpPut("ChangeStatus")]
 
-        public IActionResult ChangeStatus(string idso, int trangthai)
+        public IActionResult ChangeStatus(string idso, int trangthai,string tencanbo)
         {
             try
             {
-                return Ok(_SoquanlykenhRepository.ThaydoiTrangthai(idso, trangthai));
+                return Ok(_SoquanlykenhRepository.ThaydoiTrangthai(idso, trangthai,tencanbo));
             }
             catch (Exception ex)
             {

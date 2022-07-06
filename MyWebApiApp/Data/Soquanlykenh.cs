@@ -21,6 +21,8 @@ namespace AMGAPI.Data
         [Required]
         public Guid UngdungId { get; set; }
         [Required]
+        public Guid CanboId { get; set; }
+        [Required]
         [StringLength(20)]
         public string IP_Internalgate { get; set; }
         public int Port_Internalgate { get; set; }
@@ -36,6 +38,7 @@ namespace AMGAPI.Data
         [Required]
         [DefaultValue(false)]
         public bool is_Delete { get; set; }
+        public string? Log_process { get; set; }
         //relationship
         public virtual DmUngdung Ungdung { get; set; }
         [ForeignKey("Dangkykenh_DuyetId")]

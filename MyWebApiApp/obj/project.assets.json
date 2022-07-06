@@ -6919,11 +6919,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\AMG\\amg-gitlab\\MyWebApiApp\\AMGAPI.csproj",
+      "projectUniqueName": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj",
       "projectName": "AMGAPI",
-      "projectPath": "D:\\Code\\AMG\\amg-gitlab\\MyWebApiApp\\AMGAPI.csproj",
+      "projectPath": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj",
       "packagesPath": "C:\\Users\\Lisa\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\AMG\\amg-gitlab\\MyWebApiApp\\obj\\",
+      "outputPath": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lisa\\AppData\\Roaming\\NuGet\\NuGet.Config",

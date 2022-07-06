@@ -16,7 +16,7 @@ namespace AMGAPI.Services
             _context = context;
         }
         // Thêm mới danh mục với ViewModel cho trước
-        public Soquanlykenh Add(SoquanlykenhVM soquanlykenhvm)
+        public Soquanlykenh Add(SoquanlykenhVM soquanlykenhvm,string tencanbotaomoi)
         {
             var _Sokenh = new Soquanlykenh
             {
@@ -29,19 +29,21 @@ namespace AMGAPI.Services
                 Ngaysua = soquanlykenhvm.Ngaysua,
                 UngdungId = soquanlykenhvm.UngdungId,
                 Ngayvaoso = soquanlykenhvm.Ngayvaoso,
-                Trangthai = soquanlykenhvm.Trangthai
+                Trangthai = soquanlykenhvm.Trangthai,
+                Log_process= "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới bởi: " + tencanbotaomoi
             };
             _context.Add(_Sokenh);
             _context.SaveChanges();
             return _Sokenh;
         }
         // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
-        public bool Delete(string id)
+        public bool Delete(string id, string tencanboxoa)
         {
             var _sokenh = _context.Soquanlykenhs.SingleOrDefault(sk => sk.Id.ToString() == id);
             if (_sokenh != null)
             {
                 _sokenh.is_Delete = true;
+                _sokenh.Log_process = _sokenh.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " xóa bởi: " + tencanboxoa;
                 _context.SaveChanges();
                 return true;
             }
@@ -64,20 +66,24 @@ namespace AMGAPI.Services
             }
             return _sokenh;
         }
-        public Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai)
+        public Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai, string tencanbo)
         {
             var _Soquanlykenh = _context.Soquanlykenhs.SingleOrDefault(kenh => kenh.Id.ToString() == idkenh);
-
+            var tt = "kích hoạt";
+            if (trangthai == 0)
+                tt = "chưa kích hoạt";
+            if (trangthai == 2)
+                tt = "hủy kích hoạt";
             if (_Soquanlykenh != null)
             {
-
+                _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái "+tt+" bởi: " + tencanbo;
                 _Soquanlykenh.Trangthai = trangthai;
                 _context.SaveChanges();
                 return _Soquanlykenh;
             }
             return null;
         }
-        public bool Update(Soquanlykenh Sokenh)
+        public bool Update(Soquanlykenh Sokenh, string tencanbosua)
         {
             var _Sokenh = _context.Soquanlykenhs.SingleOrDefault(cb => cb.Id == Sokenh.Id);
 
@@ -93,6 +99,7 @@ namespace AMGAPI.Services
                 _Sokenh.UngdungId = Sokenh.UngdungId;
                 _Sokenh.Ngayvaoso = Sokenh.Ngayvaoso;
                 _Sokenh.Trangthai = Sokenh.Trangthai;
+                _Sokenh.Log_process+= "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chỉnh sửa bởi: " + tencanbosua;
                 _context.SaveChanges();
                 return true;
             }
