@@ -15,6 +15,7 @@ namespace AMGAPI.Services.Base
         DmChucvu Add(DmChucvuVM capbac);
         bool Update(DmChucvu capbac);
         bool Delete(string id);
+        List<DmChucvu> getallbyProcedure();
     }
 }
 

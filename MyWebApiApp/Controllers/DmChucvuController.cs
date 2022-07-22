@@ -28,14 +28,27 @@ namespace AMGAPI.Controllers
         {
             try
             {
-                return Ok(_DmChucvuRepository.GetAll());
+               return Ok(_DmChucvuRepository.GetAll());
             }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        [HttpGet("[action]")]
+        //[Authorize(Roles = "CHUCVU_VIEW")]
+        public IActionResult GetAllbyProcedure()
+        {
+            try
+            {
+                return Ok(_DmChucvuRepository.getallbyProcedure());
+              
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpGet("{id}")]
         //[Authorize(Roles = "CHUCVU_VIEW")]
         public IActionResult GetById(string id)

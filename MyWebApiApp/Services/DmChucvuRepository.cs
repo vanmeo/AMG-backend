@@ -1,6 +1,7 @@
 ﻿using AMGAPI.Data;
 using AMGAPI.Models;
 using AMGAPI.Services.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,13 @@ namespace AMGAPI.Services
             var Chucvus = _context.DmChucvus.Select(Chucvu => Chucvu).Where(x => x.Status == true);
             return Chucvus.ToList();
         }
+
+        public List<DmChucvu> getallbyProcedure()
+        {
+            var _Dmchucvus = _context.DmChucvus.FromSqlRaw("Chucvu_getall").ToList();
+            return _Dmchucvus;
+        }
+
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public DmChucvu GetById(string id)
         {
