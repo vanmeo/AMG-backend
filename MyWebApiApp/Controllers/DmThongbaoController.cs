@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AMGAPI.Controllers
 {
@@ -16,7 +17,7 @@ namespace AMGAPI.Controllers
     
     public class DmThongbaoController : ControllerBase
     {
-
+      
         private readonly IDmThongbaoRepository _DmThongbaoRepository;
 
         public DmThongbaoController(IDmThongbaoRepository DmThongbaoRepository)
@@ -36,40 +37,39 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        //[HttpPost("action")]
-        //public IActionResult SendSMS(string IdKenh, string sms, string sdtnhan)
-        //{
-        //    try
-        //    {
-        //        var Tb = _DmThongbaoRepository.Add(Thongbao);
-        //        if (Tb != null)
-        //            return Ok(Tb);
-        //        else
-        //            return StatusCode(StatusCodes.Status403Forbidden);
+        [HttpGet("SendSMS")]
+        public IActionResult SendSMS(string IdKenh, string sms, string sdtnhan)
+        {
+            try
+            {
+                var Tb = _DmThongbaoRepository.sendsms(IdKenh,sms,sdtnhan);
+                if (Tb)
+                    return Ok();
+                else
+                    return StatusCode(StatusCodes.Status403Forbidden);
 
-        //    }
-        //    catch
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError);
-        //    }
-        //}
-        //[HttpPost("action")]
-        //public IActionResult SendSMS_files(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
-        //{
-        //    try
-        //    {
-        //        var Tb = _DmThongbaoRepository.Add(Thongbao);
-        //        if (Tb != null)
-        //            return Ok(Tb);
-        //        else
-        //            return StatusCode(StatusCodes.Status403Forbidden);
-
-        //    }
-        //    catch
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError);
-        //    }
-        //}
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpGet("Sendfiles")]
+        public IActionResult Sendfiles(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
+        {
+            try
+            {
+                var Tb = _DmThongbaoRepository.sendsmsfile(IdKenh,sms,sdtnhan,Files);
+                if (Tb)
+                    return Ok(Tb);
+                else
+                    return StatusCode(StatusCodes.Status403Forbidden);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpPost]
         public IActionResult Add(DmThongbaoVM Thongbao)
         {
