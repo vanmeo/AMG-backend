@@ -32,7 +32,6 @@ namespace AMGAPI.Controllers
             _appSettings = optionsMonitor.CurrentValue;
             _canboRepository = canboRepository;
         }
-
         [HttpPost("Login")]
         public async Task<IActionResult> Validate(LoginModel model)
         {

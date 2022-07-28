@@ -1,6 +1,7 @@
 ﻿using AMGAPI.Data;
 using AMGAPI.Models;
 using AMGAPI.Services.Base;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,29 @@ namespace AMGAPI.Services
             else
                 return false;
         }
-    
+
+        public bool sendsms(string IdKenh, string sms, string sdtnhan)
+        {
+            var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh&&sokenh.Trangthai==1);
+            var nguoidung= _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh&&ND.Sodienthoai==sdtnhan);
+            if (soquanly != null&&nguoidung!=null)
+            {
+               if(nguoidung.NhanSMS)
+                {
+                    return true;
+                }   
+               else
+                {
+                    return false;
+                }    
+            }
+            else
+                return false;
+        }
+
+        public bool sendsmsfile(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

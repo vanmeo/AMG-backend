@@ -26,7 +26,8 @@ namespace AMGAPI.Services
                 SokenhId = danhsachnguoidungvm.SokenhId,
                 CanboId = danhsachnguoidungvm.CanboId,
                 Ngaytao = DateTime.UtcNow,
-                Ngaysua=DateTime.UtcNow
+                Ngaysua=DateTime.UtcNow,
+                NhanSMS=danhsachnguoidungvm.NhanSMS
             };
             _context.Add(_danhsachnguoidung);
             _context.SaveChanges();
@@ -64,6 +65,7 @@ namespace AMGAPI.Services
             {
                 _ud.Ten = danhsachnguoidung.Ten;
                 _ud.SokenhId = danhsachnguoidung.SokenhId;
+                _ud.NhanSMS = danhsachnguoidung.NhanSMS;
                 _ud.Ngaysua = DateTime.Now;
                 _context.SaveChanges();
                 return true;

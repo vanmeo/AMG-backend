@@ -15,5 +15,6 @@ namespace AMGAPI.Models
         public Guid CanboId { get; set; }
         public DateTime? Ngaytao { get; set;}
         public DateTime? Ngaysua { get; set;}
+        public bool NhanSMS { get; set; }
     }
 }

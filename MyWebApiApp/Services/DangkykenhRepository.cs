@@ -84,6 +84,7 @@ namespace AMGAPI.Services
                 Dangkykenh_Duyet _Dangkykenh_duyet = new Dangkykenh_Duyet();
                 _Dangkykenh_duyet.Canbothamdinh = dangkykenhduyetvm.Canbothamdinh;
                 _Dangkykenh_duyet.DangkykenhId = Guid.Parse(idkenh);
+                _Dangkykenh_duyet.TenDonVi = _Dangkykenh.TenDonvi;
                 _Dangkykenh_duyet.TenUngdung = dangkykenhduyetvm.TenUngdung;
                 _Dangkykenh_duyet.IP_Internalgate = dangkykenhduyetvm.IP_Internalgate;
                 _Dangkykenh_duyet.Port_Internalgate = dangkykenhduyetvm.Port_Internalgate;

@@ -65,7 +65,7 @@ namespace MyWebApiApp
             services.AddScoped<IThongsohethongRepository, ThongsohethongRepository>();
             services.AddScoped<IDanhsachnguoidungRepository, DanhsachnguoidungRepository>();
             services.Configure<AppSetting>(Configuration.GetSection("AppSettings"));
-
+            services.Configure<SMSService>(Configuration.GetSection("SMSServices"));
             var secretKey = Configuration["AppSettings:SecretKey"];
             var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
 

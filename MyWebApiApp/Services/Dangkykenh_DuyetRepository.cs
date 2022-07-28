@@ -100,6 +100,7 @@ namespace AMGAPI.Services
                 Soquanlykenh _so = new Soquanlykenh();
                 _so.TenUngdung = soquanlykenh.TenUngdung;
                 _so.Trangthai = 0;
+                _so.TenDonVi = _Dangkykenh_duyet.TenDonVi;
                 _so.UngdungId = soquanlykenh.UngdungId;
                 _so.IP_Internalgate = soquanlykenh.IP_Internalgate;
                 _so.IP_Ungdung = soquanlykenh.IP_Ungdung;

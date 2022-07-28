@@ -25,6 +25,7 @@ namespace AMGAPI.Data
         [Required]
         [StringLength(20)]
         public string IP_Internalgate { get; set; }
+        public string TenDonVi { get; set; }
         public int Port_Internalgate { get; set; }
         public string IP_Ungdung { get; set; }
         public int Port_Ungdung { get; set; }
@@ -35,6 +36,8 @@ namespace AMGAPI.Data
         public int Trangthai { get; set; }
         public DateTime Ngaytao{ get; set; }
         public DateTime Ngaysua { get; set; }
+        public DateTime NgayKichHoat { get; set; }
+        public DateTime NgayHuyKichHoat { get; set; }
         [Required]
         [DefaultValue(false)]
         public bool is_Delete { get; set; }
@@ -44,6 +47,6 @@ namespace AMGAPI.Data
         [ForeignKey("Dangkykenh_DuyetId")]
         public virtual Dangkykenh_Duyet Dangkykenh_Duyet { get; set; }
         public virtual List<DmThongbao> Thongbaos { get; set; }
-        public virtual List<Danhsachnguoidung> Danhsachnguoidungs { get; set; }
+        //public virtual List<Danhsachnguoidung> Danhsachnguoidungs { get; set; }
     }
 }

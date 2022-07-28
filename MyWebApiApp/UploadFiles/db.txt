@@ -1,0 +1,6 @@
+create PROCEDURE [dbo].[Chucvu_getall]
+as
+   BEGIN  
+      SELECT * FROM DmChucvu 
+     
+   END

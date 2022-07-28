@@ -26,13 +26,15 @@ namespace AMGAPI.Data
         //public Guid ChucvuId { get; set; }
         //public Guid CapbacId { get; set; }
         public Guid CanboId { get; set; }
+        [Required]
+        [DefaultValue("false")]
+        public bool NhanSMS { get; set; }
         public DateTime? Ngaytao { get; set; }
         public DateTime? Ngaysua { get; set; }
         public bool Trangthai { get; set; }
         //relationship
         public virtual Soquanlykenh Sokenh { get; set; }
-        [Required]
-        [DefaultValue("false")]
+       
         public virtual Canbo Canbo { get; set; }
 
     }

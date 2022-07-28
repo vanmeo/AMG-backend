@@ -36,6 +36,40 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        //[HttpPost("action")]
+        //public IActionResult SendSMS(string IdKenh, string sms, string sdtnhan)
+        //{
+        //    try
+        //    {
+        //        var Tb = _DmThongbaoRepository.Add(Thongbao);
+        //        if (Tb != null)
+        //            return Ok(Tb);
+        //        else
+        //            return StatusCode(StatusCodes.Status403Forbidden);
+
+        //    }
+        //    catch
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
+        //[HttpPost("action")]
+        //public IActionResult SendSMS_files(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
+        //{
+        //    try
+        //    {
+        //        var Tb = _DmThongbaoRepository.Add(Thongbao);
+        //        if (Tb != null)
+        //            return Ok(Tb);
+        //        else
+        //            return StatusCode(StatusCodes.Status403Forbidden);
+
+        //    }
+        //    catch
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
         [HttpPost]
         public IActionResult Add(DmThongbaoVM Thongbao)
         {

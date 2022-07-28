@@ -53,8 +53,8 @@ namespace AMGAPI.Services
         }
         public List<Soquanlykenh> GetAll()
         {
-            var Sokenhs = _context.Soquanlykenhs.Select(so => so).Where(x => x.is_Delete == false);
-            return Sokenhs.ToList();
+            var Sokenhs = _context.Soquanlykenhs.Select(so => so).Where(x => x.is_Delete == false).ToList();
+             return Sokenhs.ToList();
         }
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Soquanlykenh GetById(string id)
@@ -64,7 +64,7 @@ namespace AMGAPI.Services
             {
                 _context.Entry(_sokenh).Reference(p => p.Ungdung).Load();
                 _context.Entry(_sokenh).Reference(p => p.Dangkykenh_Duyet).Load();
-                _context.Entry(_sokenh).Collection(p => p.Danhsachnguoidungs).Load();
+                //_context.Entry(_sokenh).Collection(p => p.Danhsachnguoidungs).Load();
             }
             return _sokenh;
         }
@@ -73,13 +73,21 @@ namespace AMGAPI.Services
             var _Soquanlykenh = _context.Soquanlykenhs.SingleOrDefault(kenh => kenh.Id.ToString() == idkenh);
             var tt = "kích hoạt";
             if (trangthai == 0)
+            {
                 tt = "chưa kích hoạt";
+                _Soquanlykenh.NgayKichHoat = DateTime.UtcNow;
+            }
             if (trangthai == 2)
+            {
                 tt = "hủy kích hoạt";
+                _Soquanlykenh.NgayHuyKichHoat = DateTime.UtcNow;
+            }  
+        
             if (_Soquanlykenh != null)
             {
                 _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái " + tt + " bởi: " + tencanbo;
                 _Soquanlykenh.Trangthai = trangthai;
+                if(tt=="")
                 _context.SaveChanges();
                 return _Soquanlykenh;
             }
@@ -99,6 +107,10 @@ namespace AMGAPI.Services
                     int j = 1;
                     string name = workSheet.Cells[i, j++].Value.ToString();
                     string sodienthoai = workSheet.Cells[i, j++].Value.ToString();
+                    string SMS = workSheet.Cells[i, j++].Value.ToString();
+                    bool nhansms = false;
+                    if (SMS == "Có")
+                        nhansms = true;
                     Danhsachnguoidung user = new Danhsachnguoidung()
                     {
                         Ten = name,
@@ -107,20 +119,16 @@ namespace AMGAPI.Services
                         CanboId = Guid.Parse(idcanbotao),
                         Ngaytao = DateTime.UtcNow,
                         Ngaysua = DateTime.UtcNow,
-                       
+                        NhanSMS=nhansms
                     };
-
                     _context.Add(user);
                     _context.SaveChanges();
-
                 }
                 catch (Exception ex)
                 {
                     return false;
                 }
             }
-
-
             return true;
         }
 
