@@ -71,10 +71,10 @@ namespace AMGAPI.Services
         public Soquanlykenh ThaydoiTrangthai(string idkenh, int trangthai, string tencanbo)
         {
             var _Soquanlykenh = _context.Soquanlykenhs.SingleOrDefault(kenh => kenh.Id.ToString() == idkenh);
-            var tt = "kích hoạt";
-            if (trangthai == 0)
+            var tt = "chưa kích hoạt";
+            if (trangthai == 1)
             {
-                tt = "chưa kích hoạt";
+                tt = "kích hoạt";
                 _Soquanlykenh.NgayKichHoat = DateTime.UtcNow;
             }
             if (trangthai == 2)
@@ -87,7 +87,7 @@ namespace AMGAPI.Services
             {
                 _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái " + tt + " bởi: " + tencanbo;
                 _Soquanlykenh.Trangthai = trangthai;
-                if(tt=="")
+           
                 _context.SaveChanges();
                 return _Soquanlykenh;
             }

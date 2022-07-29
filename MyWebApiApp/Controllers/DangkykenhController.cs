@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace AMGAPI.Controllers
 {
@@ -24,11 +25,23 @@ namespace AMGAPI.Controllers
             _DangkykenhRepository = DangkykenhRepository;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] OwnerParameters ownerParameters)
         {
             try
             {
-                return Ok(_DangkykenhRepository.GetAll());
+                var owners = _DangkykenhRepository.findAll(ownerParameters);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+               // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
             }
             catch
             {

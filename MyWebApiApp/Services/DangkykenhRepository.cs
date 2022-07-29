@@ -55,8 +55,16 @@ namespace AMGAPI.Services
         }
         public List<Dangkykenh> GetAll()
         {
-            var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false && x.Trangthai != 1);
+            var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
             return Dangkykenhs.ToList();
+        }
+        public PagedList<Dangkykenh> findAll(OwnerParameters ownerParameters)
+        {
+            return PagedList<Dangkykenh>.ToPagedList(GetAll(),
+        ownerParameters.PageNumber,
+        ownerParameters.PageSize);
+            //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
+            //return Dangkykenhs.ToList();
         }
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Dangkykenh GetById(string id)

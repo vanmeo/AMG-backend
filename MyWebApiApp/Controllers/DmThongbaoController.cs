@@ -54,7 +54,7 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpGet("Sendfiles")]
+        [HttpPost("Sendfiles")]
         public IActionResult Sendfiles(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
         {
             try

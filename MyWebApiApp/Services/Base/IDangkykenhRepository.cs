@@ -11,6 +11,7 @@ namespace AMGAPI.Services.Base
     {
 
         List<Dangkykenh> GetAll();
+        PagedList<Dangkykenh> findAll(OwnerParameters ownerParameters);
         Dangkykenh GetById(string id);
         Dangkykenh Add(DangkykenhVM Dangkykenh);
         bool Update(Dangkykenh Dangkykenh, string tennguoisua);

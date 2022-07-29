@@ -30,6 +30,7 @@ namespace AMGAPI.Data
         public DbSet<Dangkykenh_Duyet> Dangkykenh_Duyets { get; set; }
         public DbSet<Soquanlykenh> Soquanlykenhs { get; set; }
         public DbSet<DmThongbao> DmThongbaos { get; set; }
+        public DbSet<DmThongbao_File> DmThongbao_Files { get; set; }
         public DbSet<DmBlackWord> dmBlackWords { get; set; }
         public DbSet<Danhsachnguoidung> Danhsachnguoidungs { get; set; }
         #endregion
