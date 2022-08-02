@@ -310,3 +310,4 @@ D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.dll
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\ref\AMGAPI.dll
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.pdb
 D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.genruntimeconfig.cache
+D:\Code\AMG\InGate_amg_backend\MyWebApiApp\obj\Debug\net5.0\AMGAPI.csproj.AssemblyReference.cache

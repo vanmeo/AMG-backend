@@ -25,11 +25,11 @@ namespace AMGAPI.Controllers
             _DangkykenhRepository = DangkykenhRepository;
         }
         [HttpGet]
-        public IActionResult GetAll([FromQuery] OwnerParameters ownerParameters)
+        public IActionResult GetAll([FromQuery] PaginParameters paginParameters)
         {
             try
             {
-                var owners = _DangkykenhRepository.findAll(ownerParameters);
+                var owners = _DangkykenhRepository.getAll(paginParameters);
                 var metadata = new
                 {
                     owners.TotalCount,

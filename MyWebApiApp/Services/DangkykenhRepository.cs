@@ -58,11 +58,11 @@ namespace AMGAPI.Services
             var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
             return Dangkykenhs.ToList();
         }
-        public PagedList<Dangkykenh> findAll(OwnerParameters ownerParameters)
+        public PagedList<Dangkykenh> getAll(PaginParameters paginParameters)
         {
             return PagedList<Dangkykenh>.ToPagedList(GetAll(),
-        ownerParameters.PageNumber,
-        ownerParameters.PageSize);
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
             //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
             //return Dangkykenhs.ToList();
         }

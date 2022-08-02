@@ -10,6 +10,9 @@ namespace AMGAPI.Services.Base
     public interface ICanboRepository
     {
         List<Canbo> GetAll();
+        PagedList<Canbo> getAll(PaginParameters paginParameters);
+        List<Canbo> FindAll(string searchString);
+        PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString);
         Canbo GetById(string id);
         Canbo Add(CanboVM nguoidung);
         bool Update(Canbo nguoidung);

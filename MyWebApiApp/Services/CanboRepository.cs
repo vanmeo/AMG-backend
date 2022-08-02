@@ -41,6 +41,7 @@ namespace AMGAPI.Services
             _context.SaveChanges();
             return _Canbo;
         }
+        // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
         public bool Delete(string id)
         {
             var Canbo = _context.Canbos.SingleOrDefault(cb => cb.Id.ToString() == id);
@@ -58,7 +59,27 @@ namespace AMGAPI.Services
             var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => x.Status == true);
             return Canbos.ToList();
         }
-        // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
+        public List<Canbo> FindAll(string searchString)
+        {
+            var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString)));
+            return Canbos.ToList();
+        }
+        public PagedList<Canbo> getAll(PaginParameters paginParameters)
+        {
+            return PagedList<Canbo>.ToPagedList(GetAll(),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+            //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
+            //return Dangkykenhs.ToList();
+        }
+        public PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString)
+        {
+            return PagedList<Canbo>.ToPagedList(FindAll(searchString),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+            //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
+            //return Dangkykenhs.ToList();
+        }
         public Canbo GetById(string id)
         {
             var Canbo = _context.Canbos.SingleOrDefault(nd => nd.Id.ToString() == id);

@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using AMGAPI.Services.Base;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace AMGAPI.Controllers
 {
@@ -254,18 +255,83 @@ namespace AMGAPI.Controllers
         [HttpGet]
         //[Authorize]
         //[Authorize(Roles = "CANBO_VIEW")]
-        public IActionResult GetAll()
+        //public IActionResult GetAll()
+        //{
+        //    try
+        //    {
+        //        return Ok(_canboRepository.GetAll());
+        //    }
+        //    catch
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
+        [HttpGet]
+        public IActionResult GetAll([FromQuery] PaginParameters paginParameters)
         {
             try
             {
-                return Ok(_canboRepository.GetAll());
+                var owners = _canboRepository.getAll(paginParameters);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
             }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        //public IActionResult findAll([FromQuery] int PageNumber, [FromQuery] int PageSize, string searchString)
+        //{
+        //    try
+        //    {
+        //        var owners = _canboRepository.findAll(paginParameters, searchString);
+        //        var metadata = new
+        //        {
+        //            owners.TotalCount,
+        //            owners.PageSize,
+        //            owners.CurrentPage,
+        //            owners.TotalPages,
+        //            owners.HasNext,
+        //            owners.HasPrevious
+        //        };
+        //        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+        //        // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+        //        return Ok(owners);
+        //    }
+        [HttpGet("search")]
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        {
+            try
+            {
+                var owners = _canboRepository.findAll(paginParameters, searchString);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpGet("{id}")]
         //[Authorize]
         //[Authorize(Roles = "CANBO_VIEW")]
