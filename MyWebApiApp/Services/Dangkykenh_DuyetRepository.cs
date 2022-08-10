@@ -50,8 +50,31 @@ namespace AMGAPI.Services
         }
         public List<Dangkykenh_Duyet> GetAll()
         {
-            var Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
+            var Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dkd => dkd).Where(x => x.is_Delete == false);
             return Dangkykenh_duyets.ToList();
+        }
+        public PagedList<Dangkykenh_Duyet> getAll(PaginParameters paginParameters)
+        {
+            return PagedList<Dangkykenh_Duyet>.ToPagedList(GetAll(),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
+        public List<Dangkykenh_Duyet> FindAll(string searchString)
+        {
+            if (searchString == null)
+                searchString = "";
+
+            var dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.TenUngdung.Contains(searchString) || x.TenDonVi.Contains(searchString))).ToList();
+
+            return dangkykenh_duyets.ToList();
+        }
+        public PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString)
+        {
+            return PagedList<Dangkykenh_Duyet>.ToPagedList(FindAll(searchString),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+           
         }
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Dangkykenh_Duyet GetById(string id)

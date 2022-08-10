@@ -10,6 +10,9 @@ namespace AMGAPI.Services.Base
     public interface IDanhsachnguoidungRepository
     {
         List<Danhsachnguoidung> GetAll();
+        PagedList<Danhsachnguoidung> getAll(PaginParameters paginParameters);
+        List<Danhsachnguoidung> FindAll(string searchString);
+        PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString);
         Danhsachnguoidung GetById(string id);
         Danhsachnguoidung Add(DanhsachnguoidungVM danhsachnguoidungvm);
         bool Update(Danhsachnguoidung nguoidung);

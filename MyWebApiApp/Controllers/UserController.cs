@@ -290,30 +290,12 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        //public IActionResult findAll([FromQuery] int PageNumber, [FromQuery] int PageSize, string searchString)
-        //{
-        //    try
-        //    {
-        //        var owners = _canboRepository.findAll(paginParameters, searchString);
-        //        var metadata = new
-        //        {
-        //            owners.TotalCount,
-        //            owners.PageSize,
-        //            owners.CurrentPage,
-        //            owners.TotalPages,
-        //            owners.HasNext,
-        //            owners.HasPrevious
-        //        };
-        //        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-        //        // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
-        //        return Ok(owners);
-        //    }
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string Iddonvi)
         {
             try
             {
-                var owners = _canboRepository.findAll(paginParameters, searchString);
+                var owners = _canboRepository.findAll(paginParameters, searchString, Iddonvi);
                 var metadata = new
                 {
                     owners.TotalCount,
@@ -332,6 +314,25 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        //public IActionResult findAll([FromQuery] int PageNumber, [FromQuery] int PageSize, string searchString)
+        //{
+        //    try
+        //    {
+        //        var owners = _canboRepository.findAll(paginParameters, searchString);
+        //        var metadata = new
+        //        {
+        //            owners.TotalCount,
+        //            owners.PageSize,
+        //            owners.CurrentPage,
+        //            owners.TotalPages,
+        //            owners.HasNext,
+        //            owners.HasPrevious
+        //        };
+        //        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+        //        // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+        //        return Ok(owners);
+        //    }
+      
         [HttpGet("{id}")]
         //[Authorize]
         //[Authorize(Roles = "CANBO_VIEW")]

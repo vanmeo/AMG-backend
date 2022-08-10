@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace AMGAPI.Controllers
 {
@@ -24,11 +25,48 @@ namespace AMGAPI.Controllers
             _Dangkykenh_DuyetRepository = Dangkykenh_DuyetRepository;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] PaginParameters paginParameters)
         {
             try
             {
-                return Ok(_Dangkykenh_DuyetRepository.GetAll());
+                var owners = _Dangkykenh_DuyetRepository.getAll(paginParameters);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("search")]
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        {
+            try
+            {
+                var owners = _Dangkykenh_DuyetRepository.findAll(paginParameters, searchString);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
             }
             catch
             {

@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace AMGAPI.Services.Base
 {
     public interface ISoquanlykenhRepository
-    { 
+    {
         List<Soquanlykenh> GetAll();
+        PagedList<Soquanlykenh> getAll(PaginParameters paginParameters);
+        List<Soquanlykenh> FindAll(string searchString);
+        PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString);
         Soquanlykenh GetById(string id);
         Soquanlykenh Add(SoquanlykenhVM Sokenh, string tencanbotao);
         bool Update(Soquanlykenh Sokenh, string tencanbosua);

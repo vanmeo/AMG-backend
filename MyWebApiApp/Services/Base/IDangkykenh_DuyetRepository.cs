@@ -11,6 +11,9 @@ namespace AMGAPI.Services.Base
     {
 
         List<Dangkykenh_Duyet> GetAll();
+        PagedList<Dangkykenh_Duyet> getAll(PaginParameters paginParameters);
+        List<Dangkykenh_Duyet> FindAll(string searchString);
+        PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString);
         Dangkykenh_Duyet GetById(string id);
         Dangkykenh_Duyet Add(Dangkykenh_DuyetVM Dangkykenh);
         bool Update(Dangkykenh_Duyet Dangkykenh, string tencanbosua);

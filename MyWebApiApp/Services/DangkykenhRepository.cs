@@ -33,14 +33,14 @@ namespace AMGAPI.Services
                 Ngayduyet = dangkykenhvm.Ngayduyet,
                 is_Delete = dangkykenhvm.is_Delete,
                 Trangthai = dangkykenhvm.Trangthai,
-                Log_process= DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo bởi: "+canbodangky.Tendaydu
-        };
+                Log_process = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo bởi: " + canbodangky.Tendaydu
+            };
             _context.Add(_Dangkykenh);
             _context.SaveChanges();
             return _Dangkykenh;
         }
         // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
-        public bool Delete(string id,string Tennguoixoa)
+        public bool Delete(string id, string Tennguoixoa)
         {
             var Dangkykenh = _context.Dangkykenhs.SingleOrDefault(dk => dk.Id.ToString() == id);
             if (Dangkykenh != null)
@@ -63,9 +63,24 @@ namespace AMGAPI.Services
             return PagedList<Dangkykenh>.ToPagedList(GetAll(),
         paginParameters.PageNumber,
         paginParameters.PageSize);
-            //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
-            //return Dangkykenhs.ToList();
         }
+
+        public List<Dangkykenh> FindAll(string searchString)
+        {
+            if (searchString == null)
+                searchString = "";
+
+            var dangkykenhs = _context.Dangkykenhs.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.TenUngdung.Contains(searchString) || x.TenDonvi.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+
+            return dangkykenhs.ToList();
+        }
+        public PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString)
+        {
+            return PagedList<Dangkykenh>.ToPagedList(FindAll(searchString),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Dangkykenh GetById(string id)
         {
@@ -83,7 +98,7 @@ namespace AMGAPI.Services
 
             if (_Dangkykenh != null)
             {
-                Canbo canboduyet=_context.Canbos.SingleOrDefault(p => p.Id== dangkykenhduyetvm.ID_Canboduyet);
+                Canbo canboduyet = _context.Canbos.SingleOrDefault(p => p.Id == dangkykenhduyetvm.ID_Canboduyet);
                 _Dangkykenh.Trangthai = 1;
                 _Dangkykenh.Ngayduyet = DateTime.UtcNow;
                 _Dangkykenh.Ngaysua = DateTime.UtcNow;
@@ -100,7 +115,7 @@ namespace AMGAPI.Services
                 _Dangkykenh_duyet.Ngaysua = DateTime.UtcNow;
                 _Dangkykenh_duyet.ID_Canboduyet = dangkykenhduyetvm.ID_Canboduyet;
                 _Dangkykenh_duyet.UngdungId = dangkykenhduyetvm.UngdungId;
-                _Dangkykenh_duyet.Log_process = "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới và duyệt bởi: " + canboduyet.Tendaydu; 
+                _Dangkykenh_duyet.Log_process = "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " tạo mới và duyệt bởi: " + canboduyet.Tendaydu;
                 _context.Add(_Dangkykenh_duyet);
                 _context.SaveChanges();
                 return _Dangkykenh_duyet;
@@ -125,7 +140,7 @@ namespace AMGAPI.Services
                     _Dangkykenh.Ngayduyet = DateTime.UtcNow;
                 }
                 _Dangkykenh.Ngaysua = DateTime.UtcNow;
-                _Dangkykenh.Log_process = _Dangkykenh.Log_process+ "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển sang trạng thái "+tt+" bởi: " + tencanbothaydoi;
+                _Dangkykenh.Log_process = _Dangkykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển sang trạng thái " + tt + " bởi: " + tencanbothaydoi;
                 _context.SaveChanges();
                 return _Dangkykenh;
             }
@@ -156,5 +171,7 @@ namespace AMGAPI.Services
             return false;
 
         }
+
+     
     }
 }

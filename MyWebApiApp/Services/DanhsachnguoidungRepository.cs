@@ -48,9 +48,32 @@ namespace AMGAPI.Services
 
         public List<Danhsachnguoidung> GetAll()
         {
-            var danhsachnguoidungs = _context.Danhsachnguoidungs.Select(ud => ud);
-            return danhsachnguoidungs.ToList();
+            var Danhsachnguoidungs = _context.Danhsachnguoidungs.Select(DsND => DsND);
+            return Danhsachnguoidungs.ToList();
         }
+        public PagedList<Danhsachnguoidung> getAll(PaginParameters paginParameters)
+        {
+            return PagedList<Danhsachnguoidung>.ToPagedList(GetAll(),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
+        public List<Danhsachnguoidung> FindAll(string searchString)
+        {
+            if (searchString == null)
+                searchString = "";
+
+            var Danhsachnguoidungs = _context.Danhsachnguoidungs.Select(dk => dk).Where(x => (x.Ten.Contains(searchString) || x.Sodienthoai.Contains(searchString))).ToList();
+
+            return Danhsachnguoidungs.ToList();
+        }
+        public PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString)
+        {
+            return PagedList<Danhsachnguoidung>.ToPagedList(FindAll(searchString),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Danhsachnguoidung GetById(string id)
         {

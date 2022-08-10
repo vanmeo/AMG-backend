@@ -12,7 +12,6 @@ namespace AMGAPI.Models
         private int _pageSize = 10;
         public PaginParameters()
         {
-
         }
         public int PageSize
         {

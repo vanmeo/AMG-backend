@@ -59,11 +59,7 @@ namespace AMGAPI.Services
             var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => x.Status == true);
             return Canbos.ToList();
         }
-        public List<Canbo> FindAll(string searchString)
-        {
-            var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString)));
-            return Canbos.ToList();
-        }
+       
         public PagedList<Canbo> getAll(PaginParameters paginParameters)
         {
             return PagedList<Canbo>.ToPagedList(GetAll(),
@@ -72,9 +68,25 @@ namespace AMGAPI.Services
             //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
             //return Dangkykenhs.ToList();
         }
-        public PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString)
+        public List<Canbo> FindAll(string searchString, string IdDonvi)
         {
-            return PagedList<Canbo>.ToPagedList(FindAll(searchString),
+            if (searchString == null)
+                searchString = "";
+            // var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString))&&(x.Donvi.Id.ToString()==IdDonvi|| x.Donvi.ParentId.ToString() == IdDonvi));
+            var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString))).ToList();
+            var donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == IdDonvi).ToList();
+
+            foreach (var item in donvis)
+            {
+                IdDonvi += "," + item.Id;
+                var dvs = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId == item.Id);
+            }
+            var cb = Canbos.Select(x => x).Where(x => IdDonvi.Contains(x.DonviId.ToString())).ToList();
+            return cb.ToList();
+        }
+        public PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString, string IdDonvi)
+        {
+            return PagedList<Canbo>.ToPagedList(FindAll(searchString, IdDonvi),
         paginParameters.PageNumber,
         paginParameters.PageSize);
             //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);

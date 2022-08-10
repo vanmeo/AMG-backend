@@ -51,11 +51,35 @@ namespace AMGAPI.Services
             }
             return false;
         }
+
         public List<Soquanlykenh> GetAll()
         {
-            var Sokenhs = _context.Soquanlykenhs.Select(so => so).Where(x => x.is_Delete == false).ToList();
-             return Sokenhs.ToList();
+            var Soquanlykenhs = _context.Soquanlykenhs.Select(DsND => DsND).Where(x=>x.is_Delete==false);
+            return Soquanlykenhs.ToList();
         }
+        public PagedList<Soquanlykenh> getAll(PaginParameters paginParameters)
+        {
+            return PagedList<Soquanlykenh>.ToPagedList(GetAll(),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
+        public List<Soquanlykenh> FindAll(string searchString)
+        {
+            if (searchString == null)
+                searchString = "";
+
+            var Soquanlykenhs = _context.Soquanlykenhs.Select(so => so).Where(x =>(x.is_Delete==false)&& (x.TenUngdung.Contains(searchString) || x.TenDonVi.Contains(searchString))).ToList();
+
+            return Soquanlykenhs.ToList();
+        }
+        public PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString)
+        {
+            return PagedList<Soquanlykenh>.ToPagedList(FindAll(searchString),
+        paginParameters.PageNumber,
+        paginParameters.PageSize);
+        }
+
         // Lấy theo Id đối tượng không tự động lấy quan hệ nếu cần thì lấy thêm đối tượng quan hệ
         public Soquanlykenh GetById(string id)
         {

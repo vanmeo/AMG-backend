@@ -48,6 +48,31 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+      
+        [HttpGet("search")]
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        {
+            try
+            {
+                var owners = _DangkykenhRepository.findAll(paginParameters, searchString);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetById(string id)

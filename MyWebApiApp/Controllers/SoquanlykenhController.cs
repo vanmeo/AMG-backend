@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace AMGAPI.Controllers
 {
@@ -27,11 +28,48 @@ namespace AMGAPI.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] PaginParameters paginParameters)
         {
             try
             {
-                return Ok(_SoquanlykenhRepository.GetAll());
+                var owners = _SoquanlykenhRepository.getAll(paginParameters);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("search")]
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        {
+            try
+            {
+                var owners = _SoquanlykenhRepository.findAll(paginParameters, searchString);
+                var metadata = new
+                {
+                    owners.TotalCount,
+                    owners.PageSize,
+                    owners.CurrentPage,
+                    owners.TotalPages,
+                    owners.HasNext,
+                    owners.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+                return Ok(owners);
             }
             catch
             {

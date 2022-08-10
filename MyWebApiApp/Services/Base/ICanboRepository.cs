@@ -11,8 +11,8 @@ namespace AMGAPI.Services.Base
     {
         List<Canbo> GetAll();
         PagedList<Canbo> getAll(PaginParameters paginParameters);
-        List<Canbo> FindAll(string searchString);
-        PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString);
+        List<Canbo> FindAll(string searchString, string IdDonvi);
+        PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString, string IdDonvi);
         Canbo GetById(string id);
         Canbo Add(CanboVM nguoidung);
         bool Update(Canbo nguoidung);
