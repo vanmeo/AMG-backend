@@ -14,8 +14,8 @@ namespace AMGAPI.Services.Base
         List<DmThongbao> GetAll();
         //  DmThongbao GetById(string id);
         DmThongbao Add(DmThongbaoVM Thongbao);
-        bool sendsms(string IdKenh, string sms, string sdtnhan);
-        bool sendsmsfile(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files);
+        bool sendsms(string Sodienthoaigui, string IdKenh, string tieude, string sms, string DsSdtnhan);
+        bool sendsmsfile(string Sodienthoaigui, string tieude, string IdKenh, string sms, string DSsdtnhan, List<IFormFile> Files);
         bool CheckQuyen(DmThongbaoVM Thongbao);
         //bool Delete(string id);
     }

@@ -143,6 +143,7 @@ namespace AMGAPI.Services
                         CanboId = Guid.Parse(idcanbotao),
                         Ngaytao = DateTime.UtcNow,
                         Ngaysua = DateTime.UtcNow,
+                        Trangthai = false,
                         NhanSMS=nhansms
                     };
                     _context.Add(user);

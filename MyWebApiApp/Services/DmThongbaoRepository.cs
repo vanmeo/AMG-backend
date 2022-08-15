@@ -18,11 +18,13 @@ namespace AMGAPI.Services
         private readonly MyDbContext _context;
         private readonly SMSService _smsservice;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly Datadiodeconfig _Datadiodeconfig;
 
-        public DmThongbaoRepository(MyDbContext context, IOptionsMonitor<SMSService> optionsMonitor,IWebHostEnvironment webHostEnvironment)
+        public DmThongbaoRepository(MyDbContext context, IOptionsMonitor<Datadiodeconfig> optionsMonitorDatadiode, IOptionsMonitor<SMSService> optionsMonitor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _smsservice = optionsMonitor.CurrentValue;
+            _Datadiodeconfig = optionsMonitorDatadiode.CurrentValue;
             _webHostEnvironment = webHostEnvironment;
         }
         // Thêm mới danh mục với ViewModel cho trước
@@ -43,7 +45,7 @@ namespace AMGAPI.Services
             }
             else
                 return null;
-           
+
         }
         public List<DmThongbao> GetAll()
         {
@@ -64,84 +66,129 @@ namespace AMGAPI.Services
             else
                 return false;
         }
-
-        public bool sendsms(string IdKenh, string sms, string sdtnhan)
+        public bool sendsms(string Sodienthoaigui, string IdKenh, string tieude, string sms, string DsSdtnhan)
         {
-            var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh&&sokenh.Trangthai==1);
-            var nguoidung= _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh&&ND.Sodienthoai==sdtnhan);
-            if (soquanly != null&&nguoidung!=null)
+           
+            try
             {
-               if(nguoidung.NhanSMS)
+                var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
+                string _DSNhan = "";
+                foreach (var item in DsSdtnhan.Split(','))
                 {
-                    string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + sdtnhan;          //BTL86                                                    
-                    WebClient wc = new WebClient();
-                    Stream stream = wc.OpenRead(strURL);
-                    return true;
-                }   
-               else
-                {
-                    var _Thongbao = new DmThongbao
+                    var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == item);
+                    if (soquanly != null && nguoidung != null)
                     {
-                        SoquanlykenhId = Guid.Parse(IdKenh),
-                        Noidungtinnhan = sms,
-                        Sodienthoainhan = sdtnhan,
-                        Ngaytao = DateTime.UtcNow
-                    };
-                    _context.Add(_Thongbao);
-                    _context.SaveChanges();
-                    
-                    return true;
-                }    
+                        if (nguoidung.NhanSMS)
+                        {
+                            string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
+                            WebClient wc = new WebClient();
+                            Stream stream = wc.OpenRead(strURL);
+
+                        }
+                        else
+                        {
+
+                            var _Thongbao = new DmThongbao
+                            {
+                                SoquanlykenhId = Guid.Parse(IdKenh),
+                                Sodienthoaigui = Sodienthoaigui,
+                                Noidungtinnhan = sms,
+                                Tieudetinnhan = tieude,
+                                Sodienthoainhan = item,
+                                Ngaytao = DateTime.UtcNow,
+                                Trangthai = nguoidung.Trangthai
+                            };
+                            if (nguoidung.Trangthai)
+                                _DSNhan += "," + item;
+                            _context.Add(_Thongbao);
+                            _context.SaveChanges();
+                           
+                        }
+                    }
+                }
+                if (_DSNhan != "")
+                    _DSNhan.Substring(1, _DSNhan.Length);
+                return true;
             }
-            else
+            catch 
+            {
+
                 return false;
+            }
+            
         }
 
-        public bool sendsmsfile(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
+        public bool sendsmsfile(string Sodienthoaigui, string tieude, string IdKenh, string sms, string DSsdtnhan, List<IFormFile> Files)
         {
-            var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
-            var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == sdtnhan);
-            if (soquanly != null && nguoidung != null)
+            try
             {
-                if (nguoidung.NhanSMS)
+                var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
+                // var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == DSsdtnhan);
+                string _DSNhan = "";
+                foreach (var item in DSsdtnhan.Split(','))
                 {
-                    string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + sdtnhan;          //BTL86                                                    
-                    WebClient wc = new WebClient();
-                    Stream stream = wc.OpenRead(strURL);
-                    return true;
-                }
-                else
-                {
-                    var _Thongbao = new DmThongbao
+                    var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == item);
+                    if (soquanly != null && nguoidung != null)
                     {
-                        SoquanlykenhId = Guid.Parse(IdKenh),
-                        Noidungtinnhan = sms,
-                        Sodienthoainhan = sdtnhan,
-                        Ngaytao = DateTime.UtcNow
-                    };
-                    _context.Add(_Thongbao);
-                    _context.SaveChanges();
-                    foreach (var file in Files)
-                    {
-                        string filepath = Path.Combine(_webHostEnvironment.ContentRootPath, "FileThongBao", file.FileName);
-                        using (var stream = new FileStream(filepath, FileMode.Create))
+                        if (nguoidung.NhanSMS)
                         {
-                            file.CopyTo(stream);
+                            string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
+                            WebClient wc = new WebClient();
+                            Stream stream = wc.OpenRead(strURL);
                         }
-                        var _Thongbao_file = new DmThongbao_File
+                        else
                         {
-                            IdThongbao = _Thongbao.Id,
-                            File_Url = filepath,
-                            TenFile = file.FileName
-                        };
-                        _context.Add(_Thongbao_file);
-                        _context.SaveChanges();
+                            var _Thongbao = new DmThongbao
+                            {
+                                SoquanlykenhId = Guid.Parse(IdKenh),
+                                Sodienthoaigui = Sodienthoaigui,
+                                Noidungtinnhan = sms,
+                                Tieudetinnhan = tieude,
+                                Sodienthoainhan = item,
+                                Ngaytao = DateTime.UtcNow,
+                                Trangthai = nguoidung.Trangthai
+                            };
+                            if (nguoidung.Trangthai)
+                                _DSNhan += "," + item;
+                            _context.Add(_Thongbao);
+                            _context.SaveChanges();
+                            foreach (var file in Files)
+                            {
+                                string filepath = Path.Combine(_webHostEnvironment.ContentRootPath, "FileThongBao", file.FileName);
+                                using (var stream = new FileStream(filepath, FileMode.Create))
+                                {
+                                    file.CopyTo(stream);
+                                }
+                                if (nguoidung.Trangthai)
+                                {
+                                    string filepathdiode = Path.Combine(_Datadiodeconfig.FileSms, file.FileName);
+                                    using (var stream = new FileStream(filepathdiode, FileMode.Create))
+                                    {
+                                        file.CopyTo(stream);
+                                    }
+                                }
+                                var _Thongbao_file = new DmThongbao_File
+                                {
+                                    IdThongbao = _Thongbao.Id,
+                                    File_Url = filepath,
+                                    TenFile = file.FileName
+                                };
+                                _context.Add(_Thongbao_file);
+                                _context.SaveChanges();
+                            }
+                        }
                     }
-                    return true;
+
                 }
+                return true;
             }
-            else
+            catch
+            {
+
                 return false;
+            }
+           
         }
     }
 }
+

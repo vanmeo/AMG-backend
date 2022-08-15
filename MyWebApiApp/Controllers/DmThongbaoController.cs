@@ -38,11 +38,11 @@ namespace AMGAPI.Controllers
             }
         }
         [HttpGet("SendSMS")]
-        public IActionResult SendSMS(string IdKenh, string sms, string sdtnhan)
+        public IActionResult SendSMS(string sdtgui,string IdKenh, string tieude, string sms, string DSsdtnhan)
         {
             try
             {
-                var Tb = _DmThongbaoRepository.sendsms(IdKenh,sms,sdtnhan);
+                var Tb = _DmThongbaoRepository.sendsms(sdtgui,IdKenh,tieude,sms,DSsdtnhan);
                 if (Tb)
                     return Ok();
                 else
@@ -55,11 +55,11 @@ namespace AMGAPI.Controllers
             }
         }
         [HttpPost("Sendfiles")]
-        public IActionResult Sendfiles(string IdKenh, string sms, string sdtnhan, List<IFormFile> Files)
+        public IActionResult Sendfiles(string sodienthoaigui,string IdKenh,string tieude, string sms, string DSsdtnhan, List<IFormFile> Files)
         {
             try
             {
-                var Tb = _DmThongbaoRepository.sendsmsfile(IdKenh,sms,sdtnhan,Files);
+                var Tb = _DmThongbaoRepository.sendsmsfile(sodienthoaigui,tieude,IdKenh,sms,DSsdtnhan,Files);
                 if (Tb)
                     return Ok(Tb);
                 else
@@ -80,7 +80,6 @@ namespace AMGAPI.Controllers
                     return Ok(Tb);
                 else
                     return StatusCode(StatusCodes.Status403Forbidden);
-
             }
             catch
             {

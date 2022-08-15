@@ -26,8 +26,9 @@ namespace AMGAPI.Services
                 SokenhId = danhsachnguoidungvm.SokenhId,
                 CanboId = danhsachnguoidungvm.CanboId,
                 Ngaytao = DateTime.UtcNow,
-                Ngaysua=DateTime.UtcNow,
-                NhanSMS=danhsachnguoidungvm.NhanSMS
+                Ngaysua = DateTime.UtcNow,
+                NhanSMS = danhsachnguoidungvm.NhanSMS,
+                Trangthai = false
             };
             _context.Add(_danhsachnguoidung);
             _context.SaveChanges();
@@ -83,13 +84,15 @@ namespace AMGAPI.Services
 
         public bool Update(Danhsachnguoidung danhsachnguoidung)
         {
-            var _ud = _context.Danhsachnguoidungs.SingleOrDefault(p => p.Id == danhsachnguoidung.Id);
-            if (_ud != null)
+            var _nd = _context.Danhsachnguoidungs.SingleOrDefault(p => p.Id == danhsachnguoidung.Id);
+            if (_nd != null)
             {
-                _ud.Ten = danhsachnguoidung.Ten;
-                _ud.SokenhId = danhsachnguoidung.SokenhId;
-                _ud.NhanSMS = danhsachnguoidung.NhanSMS;
-                _ud.Ngaysua = DateTime.Now;
+                _nd.Ten = danhsachnguoidung.Ten;
+                _nd.SokenhId = danhsachnguoidung.SokenhId;
+                _nd.NhanSMS = danhsachnguoidung.NhanSMS;
+                _nd.Ngaysua = DateTime.Now;
+                _nd.Trangthai = danhsachnguoidung.Trangthai;
+                _nd.Sodienthoai = danhsachnguoidung.Sodienthoai;
                 _context.SaveChanges();
                 return true;
             }
