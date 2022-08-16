@@ -50,11 +50,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
         {
             try
             {
-                var owners = _Dangkykenh_DuyetRepository.findAll(paginParameters, searchString);
+                var owners = _Dangkykenh_DuyetRepository.findAll(paginParameters, searchString, IdDonvi, from, to);
                 var metadata = new
                 {
                     owners.TotalCount,
@@ -65,7 +65,7 @@ namespace AMGAPI.Controllers
                     owners.HasPrevious
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+
                 return Ok(owners);
             }
             catch
@@ -104,7 +104,7 @@ namespace AMGAPI.Controllers
             }
             try
             {
-                _Dangkykenh_DuyetRepository.Update(Dangkykenh_duyet,tencanbosua);
+                _Dangkykenh_DuyetRepository.Update(Dangkykenh_duyet, tencanbosua);
                 return NoContent();
             }
             catch
@@ -114,11 +114,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id,string tencanbosua)
+        public IActionResult Delete(string id, string tencanbosua)
         {
             try
             {
-                _Dangkykenh_DuyetRepository.Delete(id,tencanbosua);
+                _Dangkykenh_DuyetRepository.Delete(id, tencanbosua);
                 return Ok();
             }
             catch
@@ -131,7 +131,7 @@ namespace AMGAPI.Controllers
         {
             try
             {
-                return Ok(_Dangkykenh_DuyetRepository.Vaosoquanlykenh(idKenh, Soquanlykenh,tencanbo));
+                return Ok(_Dangkykenh_DuyetRepository.Vaosoquanlykenh(idKenh, Soquanlykenh, tencanbo));
             }
             catch (Exception ex)
             {

@@ -10,8 +10,9 @@ namespace AMGAPI.Models
     public class DangkykenhVM
     {
         public string TenNguoidangky { get; set; }
-        
-        public string TenDonvi { get; set; }
+        [Required]
+        public Guid IdDonvi { get; set; }
+        //public string TenDonvi { get; set; }
         [Required]
         [StringLength(100)]
         public string TenUngdung { get; set; }

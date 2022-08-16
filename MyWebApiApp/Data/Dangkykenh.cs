@@ -18,8 +18,10 @@ namespace AMGAPI.Data
         [StringLength(100)]
         public string TenNguoidangky { get; set; }
         [Required]
-        [StringLength(100)]
-        public string TenDonvi { get; set; }
+        public Guid IdDonvi { get; set; }
+        //[Required]
+        //[StringLength(100)]
+        //public string TenDonvi { get; set; }
         [Required]
         [StringLength(100)]
         public string TenUngdung { get; set; }

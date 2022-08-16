@@ -63,19 +63,41 @@ namespace AMGAPI.Services
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
-
-        public List<Soquanlykenh> FindAll(string searchString)
+        public static string _strIdDonvi;
+        public void ProcessParentID(string idDonvi)
         {
+            var donvi = _context.DmDonvis.FirstOrDefault(x => x.Id.ToString() == idDonvi);
+            _strIdDonvi += "," + donvi.Id;
+
+            List<DmDonvi> donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == idDonvi).ToList();
+
+            foreach (var item in donvis)
+            {
+                ProcessParentID(item.Id.ToString());
+            }
+        }
+
+        public List<Soquanlykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        {
+            _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
 
-            var Soquanlykenhs = _context.Soquanlykenhs.Select(so => so).Where(x =>(x.is_Delete==false)&& (x.TenUngdung.Contains(searchString) || x.TenDonVi.Contains(searchString))).ToList();
-
-            return Soquanlykenhs.ToList();
+            var Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) &&x.Ngaytao>= from.AddHours(-12) && x.Ngaytao<=to.AddHours(12) && (x.TenUngdung.Contains(searchString))).ToList();
+            if (IdDonvi != null)
+            {
+                ProcessParentID(IdDonvi);
+                var SoQLkenhs = Soquankykenhs.Select(x => x).Where(x => _strIdDonvi.Contains(x.IdDonvi.ToString())).ToList();
+                return SoQLkenhs.ToList();
+            }
+            else
+                return Soquankykenhs.ToList();
         }
-        public PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString)
+
+    
+        public PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
         {
-            return PagedList<Soquanlykenh>.ToPagedList(FindAll(searchString),
+            return PagedList<Soquanlykenh>.ToPagedList(FindAll(searchString, IdDonvi, from, to),
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }

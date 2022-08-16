@@ -53,11 +53,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
         {
             try
             {
-                var owners = _SoquanlykenhRepository.findAll(paginParameters, searchString);
+                var owners = _SoquanlykenhRepository.findAll(paginParameters, searchString, IdDonvi, from, to);
                 var metadata = new
                 {
                     owners.TotalCount,
@@ -68,7 +68,7 @@ namespace AMGAPI.Controllers
                     owners.HasPrevious
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
+               
                 return Ok(owners);
             }
             catch

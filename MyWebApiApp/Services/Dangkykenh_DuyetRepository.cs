@@ -59,19 +59,40 @@ namespace AMGAPI.Services
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
-
-        public List<Dangkykenh_Duyet> FindAll(string searchString)
+        public static string _strIdDonvi;
+        public void ProcessParentID(string idDonvi)
         {
+            var donvi = _context.DmDonvis.FirstOrDefault(x => x.Id.ToString() == idDonvi);
+            _strIdDonvi += "," + donvi.Id;
+
+            List<DmDonvi> donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == idDonvi).ToList();
+
+            foreach (var item in donvis)
+            {
+                // _strIdDonvi += "," + item.Id;
+                ProcessParentID(item.Id.ToString());
+            }
+        }
+
+        public List<Dangkykenh_Duyet> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        {
+            _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
-
-            var dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.TenUngdung.Contains(searchString) || x.TenDonVi.Contains(searchString))).ToList();
-
-            return dangkykenh_duyets.ToList();
+            var Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.NgayTao >= from.AddHours(-12) && x.NgayTao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.Canbothamdinh.Contains(searchString))).ToList();
+            if (IdDonvi != null)
+            {
+                ProcessParentID(IdDonvi);
+                var dkds = Dangkykenh_duyets.Select(x => x).Where(x => _strIdDonvi.Contains(x.IdDonvi.ToString())).ToList();
+                return dkds.ToList();
+            }
+            else
+                return Dangkykenh_duyets.ToList();
         }
-        public PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString)
+      
+        public PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
         {
-            return PagedList<Dangkykenh_Duyet>.ToPagedList(FindAll(searchString),
+            return PagedList<Dangkykenh_Duyet>.ToPagedList(FindAll(searchString, IdDonvi, from, to),
         paginParameters.PageNumber,
         paginParameters.PageSize);
            
@@ -123,7 +144,7 @@ namespace AMGAPI.Services
                 Soquanlykenh _so = new Soquanlykenh();
                 _so.TenUngdung = soquanlykenh.TenUngdung;
                 _so.Trangthai = 0;
-                _so.TenDonVi = _Dangkykenh_duyet.TenDonVi;
+                _so.IdDonvi = _Dangkykenh_duyet.IdDonvi;
                 _so.UngdungId = soquanlykenh.UngdungId;
                 _so.IP_Internalgate = soquanlykenh.IP_Internalgate;
                 _so.IP_Ungdung = soquanlykenh.IP_Ungdung;

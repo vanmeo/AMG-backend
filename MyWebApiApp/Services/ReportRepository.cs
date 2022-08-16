@@ -37,7 +37,7 @@ namespace AMGAPI.Services
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("TenUngdung", dkkenh.TenUngdung);
             var Thongtindangky = "Tên ứng dụng:" + so.TenUngdung + "\nĐịa chỉ IP, Port:" + so.IP_Ungdung + "," + so.Port_Ungdung +
-                "\nNgày đăng ký: " + dkkenh.Ngaytao.ToString("dd/M/yyyy") + "; Người đăng ký: " + Canbodk.Tendaydu + "\nĐơn vị đăng ký: " + dkkenh.TenDonvi;
+                "\nNgày đăng ký: " + dkkenh.Ngaytao.ToString("dd/M/yyyy") + "; Người đăng ký: " + Canbodk.Tendaydu;
             parameters.Add("Thongtindangky", Thongtindangky);
             var trangthai = "";
             switch (so.Trangthai)
@@ -88,7 +88,7 @@ namespace AMGAPI.Services
                                  // where p.ProductId == 2
                                  select new
                                  {
-                                     Donvi = Dkkenh.TenDonvi,
+                                     Donvi =_context.DmDonvis.SingleOrDefault(x=>x.Id== Dkkenh.IdDonvi).Ten,
                                      TenUngdung = DSkenhduyet.TenUngdung,
                                      Ngayvaoso = DSkenhduyet.Ngayvaoso,
                                      Ngayduyet = DSkenhduyet.Ngayduyet,

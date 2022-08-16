@@ -14,6 +14,9 @@ namespace AMGAPI.Models
         [StringLength(100)]
         public string TenUngdung { get; set; }
         [Required]
+        public Guid IdDonvi { get; set; }
+        //public string TenDonvi { get; set; }
+        [Required]
         public Guid UngdungId { get; set; }
         [Required]
         [StringLength(20)]

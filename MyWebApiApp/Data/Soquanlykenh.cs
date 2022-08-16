@@ -25,7 +25,9 @@ namespace AMGAPI.Data
         [Required]
         [StringLength(20)]
         public string IP_Internalgate { get; set; }
-        public string TenDonVi { get; set; }
+        [Required]
+        public Guid IdDonvi { get; set; }
+        //public string TenDonVi { get; set; }
         public int Port_Internalgate { get; set; }
         public string IP_Ungdung { get; set; }
         public int Port_Ungdung { get; set; }

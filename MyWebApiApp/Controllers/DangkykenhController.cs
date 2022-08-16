@@ -24,6 +24,7 @@ namespace AMGAPI.Controllers
         {
             _DangkykenhRepository = DangkykenhRepository;
         }
+
         [HttpGet]
         public IActionResult GetAll([FromQuery] PaginParameters paginParameters)
         {
@@ -50,11 +51,11 @@ namespace AMGAPI.Controllers
         }
       
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string idDonvi, DateTime from, DateTime to)
         {
             try
             {
-                var owners = _DangkykenhRepository.findAll(paginParameters, searchString);
+                var owners = _DangkykenhRepository.findAll(paginParameters, searchString, idDonvi, from, to);
                 var metadata = new
                 {
                     owners.TotalCount,
@@ -65,7 +66,6 @@ namespace AMGAPI.Controllers
                     owners.HasPrevious
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
                 return Ok(owners);
             }
             catch

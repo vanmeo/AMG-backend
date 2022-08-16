@@ -11,7 +11,7 @@ namespace AMGAPI.Services
     public class CanboRepository : ICanboRepository
     {
         private readonly MyDbContext _context;
-
+       
         public CanboRepository(MyDbContext context)
         {
             _context = context;
@@ -68,21 +68,36 @@ namespace AMGAPI.Services
             //var Dangkykenhs = _context.Dangkykenhs.Select(Dangkykenh => Dangkykenh).Where(x => x.is_Delete == false);
             //return Dangkykenhs.ToList();
         }
-        public List<Canbo> FindAll(string searchString, string IdDonvi)
+        public static string _strIdDonvi;
+        public void ProcessParentID(string idDonvi)
         {
-            if (searchString == null)
-                searchString = "";
-            // var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString))&&(x.Donvi.Id.ToString()==IdDonvi|| x.Donvi.ParentId.ToString() == IdDonvi));
-            var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString))).ToList();
-            var donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == IdDonvi).ToList();
+            var donvi = _context.DmDonvis.FirstOrDefault(x => x.Id.ToString() == idDonvi);
+            _strIdDonvi +=","+ donvi.Id;
+           
+            List<DmDonvi> donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == idDonvi).ToList();
 
             foreach (var item in donvis)
+                {
+                   // _strIdDonvi += "," + item.Id;
+                ProcessParentID(item.Id.ToString());
+                }
+        }
+
+        public List<Canbo> FindAll(string searchString, string IdDonvi)
+        {
+            _strIdDonvi = "";
+            if (searchString == null)
+                searchString = "";
+            var Canbos = _context.Canbos.Select(Canbo => Canbo).Where(x => (x.Status == true) && (x.Tendaydu.Contains(searchString) || x.Tendangnhap.Contains(searchString))).ToList();
+            if (IdDonvi != null)
             {
-                IdDonvi += "," + item.Id;
-                var dvs = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId == item.Id);
+                ProcessParentID(IdDonvi);
+                var cb = Canbos.Select(x => x).Where(x => _strIdDonvi.Contains(x.DonviId.ToString())).ToList();
+                return cb.ToList();
             }
-            var cb = Canbos.Select(x => x).Where(x => IdDonvi.Contains(x.DonviId.ToString())).ToList();
-            return cb.ToList();
+            else
+                return Canbos.ToList();
+          
         }
         public PagedList<Canbo> findAll(PaginParameters paginParameters, string searchString, string IdDonvi)
         {

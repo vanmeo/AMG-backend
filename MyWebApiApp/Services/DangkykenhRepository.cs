@@ -22,7 +22,7 @@ namespace AMGAPI.Services
             var _Dangkykenh = new Dangkykenh
             {
                 TenNguoidangky = dangkykenhvm.TenNguoidangky,
-                TenDonvi = dangkykenhvm.TenDonvi,
+                IdDonvi = dangkykenhvm.IdDonvi,
                 UngdungId = dangkykenhvm.UngdungId,
                 TenUngdung = dangkykenhvm.TenUngdung,
                 IP_Ungdung = dangkykenhvm.IP_Ungdung,
@@ -64,19 +64,42 @@ namespace AMGAPI.Services
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
-
-        public List<Dangkykenh> FindAll(string searchString)
+        public static string _strIdDonvi;
+        public void ProcessParentID(string idDonvi)
         {
+            var donvi = _context.DmDonvis.FirstOrDefault(x => x.Id.ToString() == idDonvi);
+            _strIdDonvi += "," + donvi.Id;
+
+            List<DmDonvi> donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == idDonvi).ToList();
+
+            foreach (var item in donvis)
+            {
+                // _strIdDonvi += "," + item.Id;
+                ProcessParentID(item.Id.ToString());
+            }
+        }
+
+        public List<Dangkykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        {
+            _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
-
-            var dangkykenhs = _context.Dangkykenhs.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.TenUngdung.Contains(searchString) || x.TenDonvi.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
-
-            return dangkykenhs.ToList();
+            var Dangkykenhs = _context.Dangkykenhs.Select(dk => dk).Where(x => (x.is_Delete == false)&&(x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+            if (IdDonvi != null)
+            {
+                ProcessParentID(IdDonvi);
+                var dks = Dangkykenhs.Select(x => x).Where(x => _strIdDonvi.Contains(x.IdDonvi.ToString())).ToList();
+                return dks.ToList();
+            }
+            else
+            {
+                return Dangkykenhs.ToList();
+            }    
+                
         }
-        public PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString)
+        public PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi,DateTime from, DateTime to)
         {
-            return PagedList<Dangkykenh>.ToPagedList(FindAll(searchString),
+            return PagedList<Dangkykenh>.ToPagedList(FindAll(searchString, IdDonvi,from, to),
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
@@ -107,7 +130,7 @@ namespace AMGAPI.Services
                 Dangkykenh_Duyet _Dangkykenh_duyet = new Dangkykenh_Duyet();
                 _Dangkykenh_duyet.Canbothamdinh = dangkykenhduyetvm.Canbothamdinh;
                 _Dangkykenh_duyet.DangkykenhId = Guid.Parse(idkenh);
-                _Dangkykenh_duyet.TenDonVi = _Dangkykenh.TenDonvi;
+                _Dangkykenh_duyet.IdDonvi = _Dangkykenh.IdDonvi;
                 _Dangkykenh_duyet.TenUngdung = dangkykenhduyetvm.TenUngdung;
                 _Dangkykenh_duyet.IP_Internalgate = dangkykenhduyetvm.IP_Internalgate;
                 _Dangkykenh_duyet.Port_Internalgate = dangkykenhduyetvm.Port_Internalgate;
@@ -153,7 +176,7 @@ namespace AMGAPI.Services
             if (_Dangkykenh != null)
             {
                 _Dangkykenh.TenNguoidangky = Dangkykenh.TenNguoidangky;
-                _Dangkykenh.TenDonvi = Dangkykenh.TenDonvi;
+                _Dangkykenh.IdDonvi = Dangkykenh.IdDonvi;
                 _Dangkykenh.TenUngdung = Dangkykenh.TenUngdung;
                 _Dangkykenh.UngdungId = Dangkykenh.UngdungId;
                 _Dangkykenh.IP_Ungdung = Dangkykenh.IP_Ungdung;
@@ -172,6 +195,6 @@ namespace AMGAPI.Services
 
         }
 
-     
+
     }
 }
