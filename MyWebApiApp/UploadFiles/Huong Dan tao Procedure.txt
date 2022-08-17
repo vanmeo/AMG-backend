@@ -1,0 +1,33 @@
+1. Tạo proceduce phải tự viết thủ tục không tích hợp vào code được. 
+- Sau khi update-database, tạo thủ tục trong SQL. Ví dụ trên tạo thủ tục lấy tất cả danh mục chức vụ như sau:
+
+create PROCEDURE [dbo].[Chucvu_getall]
+as
+   BEGIN  
+      SELECT * FROM DmChucvu 
+     
+   END
+
+- Sau khi tạo xong thì thực hiện viết hàm trong Services. Cụ thể:
+
+ public List<DmChucvu> getallbyProcedure()
+        {
+            var _Dmchucvus = _context.DmChucvus.FromSqlRaw("Chucvu_getall").ToList();
+            return _Dmchucvus;
+        }
+
+- Trong controller gọi hàm như sau:
+[HttpGet("[action]")]
+        //[Authorize(Roles = "CHUCVU_VIEW")]
+        public IActionResult GetAllbyProcedure()
+        {
+            try
+            {
+                return Ok(_DmChucvuRepository.getallbyProcedure());
+              
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
