@@ -50,11 +50,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to, int trangthaiduyet)
         {
             try
             {
-                var owners = _Dangkykenh_DuyetRepository.findAll(paginParameters, searchString, IdDonvi, from, to);
+                var owners = _Dangkykenh_DuyetRepository.findAll(paginParameters, searchString, IdDonvi, from, to, trangthaiduyet);
                 var metadata = new
                 {
                     owners.TotalCount,

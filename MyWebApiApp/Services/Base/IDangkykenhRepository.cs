@@ -12,8 +12,8 @@ namespace AMGAPI.Services.Base
 
         List<Dangkykenh> GetAll();
         PagedList<Dangkykenh> getAll(PaginParameters paginParameters);
-        List<Dangkykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to);
-        PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to);
+        List<Dangkykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to, int Trangthaidkkenh);
+        PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to,int Trangthaidkkenh);
         Dangkykenh GetById(string id);
         Dangkykenh Add(DangkykenhVM Dangkykenh);
         bool Update(Dangkykenh Dangkykenh, string tennguoisua);

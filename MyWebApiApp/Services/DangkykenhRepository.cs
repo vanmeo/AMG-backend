@@ -79,12 +79,32 @@ namespace AMGAPI.Services
             }
         }
 
-        public List<Dangkykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        public List<Dangkykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to,int Trangthaidkkenh)
         {
             _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
-            var Dangkykenhs = _context.Dangkykenhs.Select(dk => dk).Where(x => (x.is_Delete == false)&&(x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+          
+            List<Dangkykenh> Dangkykenhs = new List<Dangkykenh>();
+            switch (Trangthaidkkenh)
+            {
+                //Chua duyet
+                case 0:
+                    Dangkykenhs = _context.Dangkykenhs.Select(so => so).Where(x => (x.is_Delete == false) && (x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && x.Trangthai==0 && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+                    break;
+                //Duyet
+                case 1:
+                    Dangkykenhs = _context.Dangkykenhs.Select(so => so).Where(x => (x.is_Delete == false) && (x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && x.Trangthai == 1 && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+                    break;
+                //Huy
+                case 2:
+                    Dangkykenhs = _context.Dangkykenhs.Select(so => so).Where(x => (x.is_Delete == false) && (x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && x.Trangthai == 2 && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+                    break;
+                //tat ca
+                default:
+                    Dangkykenhs = _context.Dangkykenhs.Select(so => so).Where(x => (x.is_Delete == false) && (x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.TenNguoidangky.Contains(searchString))).ToList();
+                    break;
+            }
             if (IdDonvi != null)
             {
                 ProcessParentID(IdDonvi);
@@ -97,9 +117,9 @@ namespace AMGAPI.Services
             }    
                 
         }
-        public PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi,DateTime from, DateTime to)
+        public PagedList<Dangkykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi,DateTime from, DateTime to, int trangthaidkkenh)
         {
-            return PagedList<Dangkykenh>.ToPagedList(FindAll(searchString, IdDonvi,from, to),
+            return PagedList<Dangkykenh>.ToPagedList(FindAll(searchString, IdDonvi,from, to, trangthaidkkenh),
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }

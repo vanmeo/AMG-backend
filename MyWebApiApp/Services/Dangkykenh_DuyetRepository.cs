@@ -74,12 +74,27 @@ namespace AMGAPI.Services
             }
         }
 
-        public List<Dangkykenh_Duyet> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        public List<Dangkykenh_Duyet> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to, int trangthai)
         {
             _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
-            var Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.NgayTao >= from.AddHours(-12) && x.NgayTao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.Canbothamdinh.Contains(searchString))).ToList();
+            List<Dangkykenh_Duyet> Dangkykenh_duyets = new List<Dangkykenh_Duyet>();
+            switch (trangthai)
+            {
+                //Chua duyet
+                case 0:
+                    Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && x.Trangthai == false && (x.NgayTao >= from.AddHours(-12) && x.NgayTao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.Canbothamdinh.Contains(searchString))).ToList();
+                    break;
+                //Duyet
+                case 1:
+                    Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false)&& x.Trangthai==true && (x.NgayTao >= from.AddHours(-12) && x.NgayTao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.Canbothamdinh.Contains(searchString))).ToList();
+                    break;
+                //tat ca
+                default:
+                    Dangkykenh_duyets = _context.Dangkykenh_Duyets.Select(dk => dk).Where(x => (x.is_Delete == false) && (x.NgayTao >= from.AddHours(-12) && x.NgayTao <= to.AddHours(12)) && (x.TenUngdung.Contains(searchString) || x.Canbothamdinh.Contains(searchString))).ToList();
+                    break;
+            }
             if (IdDonvi != null)
             {
                 ProcessParentID(IdDonvi);
@@ -90,9 +105,9 @@ namespace AMGAPI.Services
                 return Dangkykenh_duyets.ToList();
         }
       
-        public PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
+        public PagedList<Dangkykenh_Duyet> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to, int trangthai)
         {
-            return PagedList<Dangkykenh_Duyet>.ToPagedList(FindAll(searchString, IdDonvi, from, to),
+            return PagedList<Dangkykenh_Duyet>.ToPagedList(FindAll(searchString, IdDonvi, from, to, trangthai),
         paginParameters.PageNumber,
         paginParameters.PageSize);
            
