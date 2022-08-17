@@ -48,6 +48,8 @@ namespace AMGAPI.Data
         public virtual DmUngdung Ungdung { get; set; }
         [ForeignKey("Dangkykenh_DuyetId")]
         public virtual Dangkykenh_Duyet Dangkykenh_Duyet { get; set; }
+        //[ForeignKey("IdDonvi")]
+        //public virtual DmDonvi Donvi { get; set; }
         public virtual List<DmThongbao> Thongbaos { get; set; }
         //public virtual List<Danhsachnguoidung> Danhsachnguoidungs { get; set; }
     }

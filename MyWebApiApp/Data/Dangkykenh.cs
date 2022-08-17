@@ -43,7 +43,10 @@ namespace AMGAPI.Data
         public bool is_Delete { get; set; }
         // public Guid? ID_Nguoiduyet { get; set; }
         //relationship
+        //[ForeignKey("IdDonvi")]
+        //public virtual DmDonvi Donvi { get; set; }
         public virtual DmUngdung Ungdung { get; set; }
+        //[ForeignKey("ID_Canbodangky")]
         public virtual Canbo CanboDangky { get; set; }
         //[InverseProperty("Canbo")]
        // public virtual Canbo CanboDuyet { get; set; }

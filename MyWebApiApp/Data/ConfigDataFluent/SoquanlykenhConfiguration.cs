@@ -13,7 +13,9 @@ namespace AMGAPI.Data.ConfigDataFluent
         {
             builder.Property(x => x.Ngaytao).HasDefaultValueSql("getutcdate()");
             builder.Property(x => x.Ngaysua).HasDefaultValueSql("getutcdate()");
-            builder.HasOne(x => x.Ungdung).WithMany(e => e.Soquanlykenhs).HasForeignKey(k => k.UngdungId).HasConstraintName("FK_SoQLKenh_Ungdung").OnDelete(DeleteBehavior.NoAction);  
+            builder.HasOne(x => x.Ungdung).WithMany(e => e.Soquanlykenhs).HasForeignKey(k => k.UngdungId).HasConstraintName("FK_SoQLKenh_Ungdung").OnDelete(DeleteBehavior.NoAction);
+           
+
         }
     }
 }

@@ -54,7 +54,7 @@ namespace AMGAPI.Services
 
         public List<Soquanlykenh> GetAll()
         {
-            var Soquanlykenhs = _context.Soquanlykenhs.Select(DsND => DsND).Where(x=>x.is_Delete==false);
+            var Soquanlykenhs = _context.Soquanlykenhs.Select(DsND => DsND).Where(x => x.is_Delete == false);
             return Soquanlykenhs.ToList();
         }
         public PagedList<Soquanlykenh> getAll(PaginParameters paginParameters)
@@ -77,13 +77,32 @@ namespace AMGAPI.Services
             }
         }
 
-        public List<Soquanlykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to)
+        public List<Soquanlykenh> FindAll(string searchString, string IdDonvi, DateTime from, DateTime to, int Trangthaikenh)
         {
             _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
+            List<Soquanlykenh> Soquankykenhs = new List<Soquanlykenh>();
+            switch (Trangthaikenh)
+            {
+                //Chua kich hoat
+                case 0:
+                    Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) && x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12) && (x.TenUngdung.Contains(searchString)) && x.Trangthai == 0).ToList();
+                    break;
+                //Da kich hoat
+                case 1:
+                    Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) && x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12) && (x.TenUngdung.Contains(searchString)) && x.Trangthai == 1).ToList();
+                    break;
+                //Huy kich hoat
+                case 2:
+                    Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) && x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12) && (x.TenUngdung.Contains(searchString)) && x.Trangthai == 2).ToList();
+                    break;
+                //tat ca
+                default:
+                    Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) && x.Ngaytao >= from.AddHours(-12) && x.Ngaytao <= to.AddHours(12) && (x.TenUngdung.Contains(searchString))).ToList();
+                    break;
+            }
 
-            var Soquankykenhs = _context.Soquanlykenhs.Select(so => so).Where(x => (x.is_Delete == false) &&x.Ngaytao>= from.AddHours(-12) && x.Ngaytao<=to.AddHours(12) && (x.TenUngdung.Contains(searchString))).ToList();
             if (IdDonvi != null)
             {
                 ProcessParentID(IdDonvi);
@@ -94,10 +113,10 @@ namespace AMGAPI.Services
                 return Soquankykenhs.ToList();
         }
 
-    
-        public PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to)
+
+        public PagedList<Soquanlykenh> findAll(PaginParameters paginParameters, string searchString, string IdDonvi, DateTime from, DateTime to, int Trangthaikenh)
         {
-            return PagedList<Soquanlykenh>.ToPagedList(FindAll(searchString, IdDonvi, from, to),
+            return PagedList<Soquanlykenh>.ToPagedList(FindAll(searchString, IdDonvi, from, to, Trangthaikenh),
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
@@ -127,13 +146,13 @@ namespace AMGAPI.Services
             {
                 tt = "hủy kích hoạt";
                 _Soquanlykenh.NgayHuyKichHoat = DateTime.UtcNow;
-            }  
-        
+            }
+
             if (_Soquanlykenh != null)
             {
                 _Soquanlykenh.Log_process = _Soquanlykenh.Log_process + "\r\n" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " chuyển trạng thái " + tt + " bởi: " + tencanbo;
                 _Soquanlykenh.Trangthai = trangthai;
-           
+
                 _context.SaveChanges();
                 return _Soquanlykenh;
             }
@@ -142,6 +161,7 @@ namespace AMGAPI.Services
 
         public bool Themdanhsachnguoidung(string idkenh, string idcanbotao, string filename)
         {
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh);
             List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
             var package = new ExcelPackage(new FileInfo(filename));
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -161,12 +181,13 @@ namespace AMGAPI.Services
                     {
                         Ten = name,
                         Sodienthoai = sodienthoai,
+                        IdDonvi = soQuanlykenh.IdDonvi,
                         SokenhId = Guid.Parse(idkenh),
                         CanboId = Guid.Parse(idcanbotao),
                         Ngaytao = DateTime.UtcNow,
                         Ngaysua = DateTime.UtcNow,
                         Trangthai = false,
-                        NhanSMS=nhansms
+                        NhanSMS = nhansms
                     };
                     _context.Add(user);
                     _context.SaveChanges();
@@ -201,6 +222,38 @@ namespace AMGAPI.Services
             }
             return false;
 
+        }
+
+        public bool AddArray(string idkenh, List<NguoidungMobile> DS, string idcanbotao)
+        {
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh);
+            List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
+            try
+            {
+                foreach (var item in DS)
+                {
+                    Danhsachnguoidung user = new Danhsachnguoidung()
+                    {
+                        Ten = item.Ten,
+                        Sodienthoai = item.SDT,
+                        IdDonvi = soQuanlykenh.IdDonvi,
+                        SokenhId = Guid.Parse(idkenh),
+                        CanboId = Guid.Parse(idcanbotao),
+                        Ngaytao = DateTime.UtcNow,
+                        Ngaysua = DateTime.UtcNow,
+                        Trangthai = false,
+                        NhanSMS = item.SendSMS
+                    };
+                    _context.Add(user);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
         }
     }
 }

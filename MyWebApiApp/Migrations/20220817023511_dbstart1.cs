@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AMGAPI.Migrations
 {
-    public partial class _1 : Migration
+    public partial class dbstart1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,23 +64,6 @@ namespace AMGAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DmChucvu", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DmDonvi",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Ma = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Ten = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Viettat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Ghichu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DmDonvi", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,59 +137,6 @@ namespace AMGAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Canbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Tendaydu = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Tendangnhap = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Matkhau = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Dienthoai_mobile = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Dienthoai_cd1 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Dienthoai_cd2 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Dienthoai_cd3 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Ngaysinh = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Anhdaidien_ten = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Anhdaidien_url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DonviId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChucvuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CapbacId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    Publickey_value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Publickey_status = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Canbo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Canbo_Capbac",
-                        column: x => x.CapbacId,
-                        principalTable: "DmCapbac",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Canbo_Chucvu",
-                        column: x => x.ChucvuId,
-                        principalTable: "DmChucvu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Canbo_Donvi",
-                        column: x => x.DonviId,
-                        principalTable: "DmDonvi",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Canbo_Role",
-                        column: x => x.RoleId,
-                        principalTable: "DmRole",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DmRole_Feature",
                 columns: table => new
                 {
@@ -261,41 +191,11 @@ namespace AMGAPI.Migrations
                 {
                     table.PrimaryKey("PK_Dangkykenh", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dangkykenh_Canbo_CanboDangkyId",
-                        column: x => x.CanboDangkyId,
-                        principalTable: "Canbo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Dangkykenh_Ungdung",
                         column: x => x.UngdungId,
                         principalTable: "DmUngdung",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RefreshToken",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JwtId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
-                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
-                    IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiredAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RefreshToken_Canbo_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Canbo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -320,12 +220,6 @@ namespace AMGAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dangkykenh_Duyet", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Dangkykenh_Duyet_Canbo_ID_Canboduyet",
-                        column: x => x.ID_Canboduyet,
-                        principalTable: "Canbo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Dangkykenh_Duyet_Dangkykenh_DangkykenhId",
                         column: x => x.DangkykenhId,
@@ -379,34 +273,41 @@ namespace AMGAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Danhsachnguoidung",
+                name: "DmDonvi",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Ma = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Sodienthoai = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    SokenhId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CanboId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NhanSMS = table.Column<bool>(type: "bit", nullable: false),
-                    Ngaytao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Ngaysua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Trangthai = table.Column<bool>(type: "bit", nullable: false)
+                    Viettat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Ghichu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DangkykenhId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Dangkykenh_duyetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SoquanlykenhId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Danhsachnguoidung", x => x.Id);
+                    table.PrimaryKey("PK_DmDonvi", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Danhsachnguoidung_Canbo_CanboId",
-                        column: x => x.CanboId,
-                        principalTable: "Canbo",
+                        name: "FK_DmDonvi_Dangkykenh_DangkykenhId",
+                        column: x => x.DangkykenhId,
+                        principalTable: "Dangkykenh",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Danhsachnguoidung_Soquanlykenh_SokenhId",
-                        column: x => x.SokenhId,
+                        name: "FK_DmDonvi_Dangkykenh_Duyet_Dangkykenh_duyetId",
+                        column: x => x.Dangkykenh_duyetId,
+                        principalTable: "Dangkykenh_Duyet",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DmDonvi_Soquanlykenh_SoquanlykenhId",
+                        column: x => x.SoquanlykenhId,
                         principalTable: "Soquanlykenh",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,6 +335,59 @@ namespace AMGAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Canbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Tendaydu = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Tendangnhap = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Matkhau = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Dienthoai_mobile = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Dienthoai_cd1 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Dienthoai_cd2 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Dienthoai_cd3 = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Ngaysinh = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Anhdaidien_ten = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Anhdaidien_url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DonviId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChucvuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CapbacId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    Publickey_value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Publickey_status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Canbo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Canbo_Capbac",
+                        column: x => x.CapbacId,
+                        principalTable: "DmCapbac",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Canbo_Chucvu",
+                        column: x => x.ChucvuId,
+                        principalTable: "DmChucvu",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Canbo_Donvi",
+                        column: x => x.DonviId,
+                        principalTable: "DmDonvi",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Canbo_Role",
+                        column: x => x.RoleId,
+                        principalTable: "DmRole",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DmThongbao_File",
                 columns: table => new
                 {
@@ -452,6 +406,62 @@ namespace AMGAPI.Migrations
                         principalTable: "DmThongbao",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Danhsachnguoidung",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Ten = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Sodienthoai = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    IdDonvi = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SokenhId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CanboId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NhanSMS = table.Column<bool>(type: "bit", nullable: false),
+                    Ngaytao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Ngaysua = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Trangthai = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Danhsachnguoidung", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Danhsachnguoidung_Canbo_CanboId",
+                        column: x => x.CanboId,
+                        principalTable: "Canbo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Danhsachnguoidung_Soquanlykenh_SokenhId",
+                        column: x => x.SokenhId,
+                        principalTable: "Soquanlykenh",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JwtId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
+                    IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiredAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_Canbo_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Canbo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -485,11 +495,11 @@ namespace AMGAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "DmDonvi",
-                columns: new[] { "Id", "Ghichu", "Ma", "ParentId", "Status", "Ten", "Viettat" },
+                columns: new[] { "Id", "DangkykenhId", "Dangkykenh_duyetId", "Ghichu", "Ma", "ParentId", "SoquanlykenhId", "Status", "Ten", "Viettat" },
                 values: new object[,]
                 {
-                    { new Guid("574b452c-b586-499b-d7b9-08da44749b96"), "Viện 10", "V10", null, true, "Viện 10", "V10" },
-                    { new Guid("07ca1673-4e6c-448e-8f65-a1ef3b65717b"), "PKH", "PKH", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), true, "PKH", "PKH" }
+                    { new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, null, "Viện 10", "V10", null, null, true, "Viện 10", "V10" },
+                    { new Guid("07ca1673-4e6c-448e-8f65-a1ef3b65717b"), null, null, "PKH", "PKH", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, true, "PKH", "PKH" }
                 });
 
             migrationBuilder.InsertData(
@@ -514,7 +524,7 @@ namespace AMGAPI.Migrations
             migrationBuilder.InsertData(
                 table: "ThongsoHethong",
                 columns: new[] { "Id", "CreateDate", "Datadiode_IP", "Datadiode_Port", "Datadiode_Token", "KichthuocFilesMax", "ModifiedDate", "TanSuatXoanhatky_ngay", "TansuatQuet_Phut" },
-                values: new object[] { new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), new DateTime(2022, 8, 16, 8, 25, 24, 817, DateTimeKind.Utc).AddTicks(5690), "1.1.1.1", 5033, "123", (byte)1, new DateTime(2022, 8, 16, 8, 25, 24, 817, DateTimeKind.Utc).AddTicks(5947), (byte)1, 10 });
+                values: new object[] { new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), new DateTime(2022, 8, 17, 2, 35, 10, 894, DateTimeKind.Utc).AddTicks(1976), "1.1.1.1", 5033, "123", (byte)1, new DateTime(2022, 8, 17, 2, 35, 10, 894, DateTimeKind.Utc).AddTicks(2338), (byte)1, 10 });
 
             migrationBuilder.InsertData(
                 table: "Canbo",
@@ -526,8 +536,8 @@ namespace AMGAPI.Migrations
                 columns: new[] { "Id", "CanboDangkyId", "ID_Canbodangky", "IP_Ungdung", "IdDonvi", "Log_process", "Ngayduyet", "Ngaysua", "Ngaytao", "Port_Ungdung", "TenNguoidangky", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
                 values: new object[,]
                 {
-                    { new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(8889), new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(8374), new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(8079), 80, "Đc Vân", "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
-                    { new Guid("37f70f55-7dcb-4ca5-b0c8-7466b9cedf3d"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(9586), new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(9584), new DateTime(2022, 8, 16, 8, 25, 24, 813, DateTimeKind.Utc).AddTicks(9582), 80, "Đc Minh", "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
+                    { new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(3439), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(2859), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(2534), 80, "Đc Vân", "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
+                    { new Guid("37f70f55-7dcb-4ca5-b0c8-7466b9cedf3d"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(4208), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(4207), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(4204), 80, "Đc Minh", "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
                 });
 
             migrationBuilder.InsertData(
@@ -551,8 +561,8 @@ namespace AMGAPI.Migrations
                 columns: new[] { "Id", "Canbothamdinh", "DangkykenhId", "ID_Canboduyet", "IP_Internalgate", "IdDonvi", "Log_process", "NgayTao", "Ngaysua", "Port_Internalgate", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
                 values: new object[,]
                 {
-                    { new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(2444), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(2727), 80, "CĐ-ĐH", false, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
-                    { new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(3573), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(3575), 80, "CĐN", false, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
+                    { new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(7670), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(8148), 80, "CĐ-ĐH", false, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
+                    { new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(9393), new DateTime(2022, 8, 17, 2, 35, 10, 890, DateTimeKind.Utc).AddTicks(9396), 80, "CĐN", false, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
                 });
 
             migrationBuilder.InsertData(
@@ -574,22 +584,22 @@ namespace AMGAPI.Migrations
             migrationBuilder.InsertData(
                 table: "Soquanlykenh",
                 columns: new[] { "Id", "CanboId", "Dangkykenh_DuyetId", "IP_Internalgate", "IP_Ungdung", "IdDonvi", "Log_process", "NgayHuyKichHoat", "NgayKichHoat", "Ngaysua", "Ngaytao", "Ngayvaoso", "Port_Internalgate", "Port_Ungdung", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
-                values: new object[] { new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "10.10.10.0", "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(8854), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(8576), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(9126), 80, 80, "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false });
+                values: new object[] { new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "10.10.10.0", "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(5637), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(5327), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(5939), 80, 80, "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false });
 
             migrationBuilder.InsertData(
                 table: "Soquanlykenh",
                 columns: new[] { "Id", "CanboId", "Dangkykenh_DuyetId", "IP_Internalgate", "IP_Ungdung", "IdDonvi", "Log_process", "NgayHuyKichHoat", "NgayKichHoat", "Ngaysua", "Ngaytao", "Ngayvaoso", "Port_Internalgate", "Port_Ungdung", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
-                values: new object[] { new Guid("46988f74-1475-4283-a128-dda4f4b16094"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "10.10.10.0", "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(9654), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(9652), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(9656), 80, 80, "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false });
+                values: new object[] { new Guid("46988f74-1475-4283-a128-dda4f4b16094"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "10.10.10.0", "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(6525), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(6522), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(6526), 80, 80, "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false });
 
             migrationBuilder.InsertData(
                 table: "DmThongbao",
                 columns: new[] { "Id", "Ngaytao", "Noidungtinnhan", "Sodienthoaigui", "Sodienthoainhan", "SoquanlykenhId", "Tieudetinnhan", "Trangthai" },
-                values: new object[] { new Guid("b079a0b9-50b1-4e54-af26-96f1e6576926"), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(5306), "CĐ-ĐH", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
+                values: new object[] { new Guid("b079a0b9-50b1-4e54-af26-96f1e6576926"), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(1512), "CĐ-ĐH", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
 
             migrationBuilder.InsertData(
                 table: "DmThongbao",
                 columns: new[] { "Id", "Ngaytao", "Noidungtinnhan", "Sodienthoaigui", "Sodienthoainhan", "SoquanlykenhId", "Tieudetinnhan", "Trangthai" },
-                values: new object[] { new Guid("9b773e21-4ee4-4e50-adc7-1edb42dbcfb1"), new DateTime(2022, 8, 16, 8, 25, 24, 814, DateTimeKind.Utc).AddTicks(5616), "CĐN", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
+                values: new object[] { new Guid("9b773e21-4ee4-4e50-adc7-1edb42dbcfb1"), new DateTime(2022, 8, 17, 2, 35, 10, 891, DateTimeKind.Utc).AddTicks(1881), "CĐN", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Canbo_CapbacId",
@@ -653,6 +663,21 @@ namespace AMGAPI.Migrations
                 column: "SokenhId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DmDonvi_Dangkykenh_duyetId",
+                table: "DmDonvi",
+                column: "Dangkykenh_duyetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DmDonvi_DangkykenhId",
+                table: "DmDonvi",
+                column: "DangkykenhId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DmDonvi_SoquanlykenhId",
+                table: "DmDonvi",
+                column: "SoquanlykenhId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DmFeature_AppId",
                 table: "DmFeature",
                 column: "AppId");
@@ -691,10 +716,38 @@ namespace AMGAPI.Migrations
                 name: "IX_Soquanlykenh_UngdungId",
                 table: "Soquanlykenh",
                 column: "UngdungId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Dangkykenh_Canbo_CanboDangkyId",
+                table: "Dangkykenh",
+                column: "CanboDangkyId",
+                principalTable: "Canbo",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Dangkykenh_Duyet_Canbo_ID_Canboduyet",
+                table: "Dangkykenh_Duyet",
+                column: "ID_Canboduyet",
+                principalTable: "Canbo",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Canbo_Capbac",
+                table: "Canbo");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Canbo_Chucvu",
+                table: "Canbo");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Canbo_Donvi",
+                table: "Canbo");
+
             migrationBuilder.DropTable(
                 name: "Danhsachnguoidung");
 
@@ -723,6 +776,15 @@ namespace AMGAPI.Migrations
                 name: "DmApp");
 
             migrationBuilder.DropTable(
+                name: "DmCapbac");
+
+            migrationBuilder.DropTable(
+                name: "DmChucvu");
+
+            migrationBuilder.DropTable(
+                name: "DmDonvi");
+
+            migrationBuilder.DropTable(
                 name: "Soquanlykenh");
 
             migrationBuilder.DropTable(
@@ -736,15 +798,6 @@ namespace AMGAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "DmUngdung");
-
-            migrationBuilder.DropTable(
-                name: "DmCapbac");
-
-            migrationBuilder.DropTable(
-                name: "DmChucvu");
-
-            migrationBuilder.DropTable(
-                name: "DmDonvi");
 
             migrationBuilder.DropTable(
                 name: "DmRole");

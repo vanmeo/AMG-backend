@@ -44,5 +44,7 @@ namespace AMGAPI.Data
         public virtual Canbo CanboDuyet { get; set; }
         [ForeignKey("DangkykenhId")]
         public virtual Dangkykenh Dangkykenh { get; set; }
+        //[ForeignKey("IdDonvi")]
+        //public virtual DmDonvi Donvi { get; set; }
     }
 }

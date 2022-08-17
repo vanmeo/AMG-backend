@@ -19,10 +19,12 @@ namespace AMGAPI.Services
         // Thêm mới danh mục với ViewModel cho trước
         public Danhsachnguoidung Add(DanhsachnguoidungVM danhsachnguoidungvm)
         {
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id == danhsachnguoidungvm.SokenhId);
             var _danhsachnguoidung = new Danhsachnguoidung
             {
                 Ten = danhsachnguoidungvm.Ten,
                 Sodienthoai = danhsachnguoidungvm.Sodienthoai,
+                IdDonvi=soQuanlykenh.IdDonvi,
                 SokenhId = danhsachnguoidungvm.SokenhId,
                 CanboId = danhsachnguoidungvm.CanboId,
                 Ngaytao = DateTime.UtcNow,
@@ -58,19 +60,38 @@ namespace AMGAPI.Services
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
-
-        public List<Danhsachnguoidung> FindAll(string searchString)
+        public static string _strIdDonvi;
+        public void ProcessParentID(string idDonvi)
         {
+            var donvi = _context.DmDonvis.FirstOrDefault(x => x.Id.ToString() == idDonvi);
+            _strIdDonvi += "," + donvi.Id;
+
+            List<DmDonvi> donvis = _context.DmDonvis.Select(dv => dv).Where(x => x.ParentId.ToString() == idDonvi).ToList();
+
+            foreach (var item in donvis)
+            {
+                // _strIdDonvi += "," + item.Id;
+                ProcessParentID(item.Id.ToString());
+            }
+        }
+        public List<Danhsachnguoidung> FindAll(string searchString, string IdDonvi)
+        {
+            _strIdDonvi = "";
             if (searchString == null)
                 searchString = "";
-
-            var Danhsachnguoidungs = _context.Danhsachnguoidungs.Select(dk => dk).Where(x => (x.Ten.Contains(searchString) || x.Sodienthoai.Contains(searchString))).ToList();
-
-            return Danhsachnguoidungs.ToList();
+            var Danhsachnguoidungs = _context.Danhsachnguoidungs.Select(nd => nd).Where(x => (x.Ten.Contains(searchString) || x.Sodienthoai.Contains(searchString))).ToList();
+            if (IdDonvi != null)
+            {
+                ProcessParentID(IdDonvi);
+                var nds = Danhsachnguoidungs.Select(x => x).Where(x => _strIdDonvi.Contains(x.IdDonvi.ToString())).ToList();
+                return nds.ToList();
+            }
+            else
+                return Danhsachnguoidungs.ToList();
         }
-        public PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString)
+        public PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString, string IdDonvi)
         {
-            return PagedList<Danhsachnguoidung>.ToPagedList(FindAll(searchString),
+            return PagedList<Danhsachnguoidung>.ToPagedList(FindAll(searchString, IdDonvi),
         paginParameters.PageNumber,
         paginParameters.PageSize);
         }
@@ -88,6 +109,7 @@ namespace AMGAPI.Services
             if (_nd != null)
             {
                 _nd.Ten = danhsachnguoidung.Ten;
+                _nd.IdDonvi = danhsachnguoidung.IdDonvi;
                 _nd.SokenhId = danhsachnguoidung.SokenhId;
                 _nd.NhanSMS = danhsachnguoidung.NhanSMS;
                 _nd.Ngaysua = DateTime.Now;

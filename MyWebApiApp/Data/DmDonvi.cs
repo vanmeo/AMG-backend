@@ -26,6 +26,9 @@ namespace AMGAPI.Data
         [DefaultValue("true")]
         public bool Status { get; set; }
         public virtual ICollection<Canbo> Canbos { get; set; }
+        public virtual Dangkykenh Dangkykenh { get; set; }
+        public virtual Dangkykenh_Duyet Dangkykenh_duyet { get; set; }
+        public virtual Soquanlykenh Soquanlykenh { get; set; }
         public DmDonvi()
         {
             Canbos = new HashSet<Canbo>();

@@ -11,8 +11,8 @@ namespace AMGAPI.Services.Base
     {
         List<Danhsachnguoidung> GetAll();
         PagedList<Danhsachnguoidung> getAll(PaginParameters paginParameters);
-        List<Danhsachnguoidung> FindAll(string searchString);
-        PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString);
+        List<Danhsachnguoidung> FindAll(string searchString, string IdDonvi);
+        PagedList<Danhsachnguoidung> findAll(PaginParameters paginParameters, string searchString, string IdDonvi);
         Danhsachnguoidung GetById(string id);
         Danhsachnguoidung Add(DanhsachnguoidungVM danhsachnguoidungvm);
         bool Update(Danhsachnguoidung nguoidung);

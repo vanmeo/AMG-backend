@@ -50,11 +50,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpGet("search")]
-        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString)
+        public IActionResult findAll([FromQuery] PaginParameters paginParameters, string searchString, string IdDonvi)
         {
             try
             {
-                var owners = _DanhsachnguoidungRepository.findAll(paginParameters, searchString);
+                var owners = _DanhsachnguoidungRepository.findAll(paginParameters, searchString, IdDonvi);
                 var metadata = new
                 {
                     owners.TotalCount,
@@ -65,7 +65,6 @@ namespace AMGAPI.Controllers
                     owners.HasPrevious
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-                // _logger.LogInfo($"Returned {owners.TotalCount} owners from database.");
                 return Ok(owners);
             }
             catch
@@ -132,7 +131,6 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPost]
-      
         public IActionResult Add(DanhsachnguoidungVM danhsachnguoidungvm)
         {
             try

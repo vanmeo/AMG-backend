@@ -21,10 +21,12 @@ namespace AMGAPI.Data
         [Required]
         [StringLength(10)]
         public string Sodienthoai { get; set; }
-
+        //Lấy đơn vị theo sổ kênh
+        public Guid IdDonvi { get; set; }
         public Guid SokenhId { get; set; }
         //public Guid ChucvuId { get; set; }
         //public Guid CapbacId { get; set; }
+        //Id can bo tao
         public Guid CanboId { get; set; }
         [Required]
         [DefaultValue("false")]
