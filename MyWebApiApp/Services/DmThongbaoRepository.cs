@@ -4,6 +4,7 @@ using AMGAPI.Services.Base;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,7 +84,6 @@ namespace AMGAPI.Services
                             string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
                             WebClient wc = new WebClient();
                             Stream stream = wc.OpenRead(strURL);
-
                         }
                         else
                         {
@@ -107,12 +107,27 @@ namespace AMGAPI.Services
                     }
                 }
                 if (_DSNhan != "")
-                    _DSNhan.Substring(1, _DSNhan.Length);
+                {
+                    string ds=_DSNhan.Substring(1, _DSNhan.Length-1);
+
+                    SMSObject obj = new SMSObject
+                    {
+                        SdtGui = Sodienthoaigui,
+                        Tieude = tieude,
+                        NoiDung = sms,
+                        idKenh = IdKenh,
+                        DSSdtNhan = ds,
+                        DSFile = ""
+                    };
+
+                    string jsonStr = JsonConvert.SerializeObject(obj);
+                    string path = _Datadiodeconfig.OutJson + "//"+"sendsms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
+                    File.WriteAllText(path, jsonStr);
+                }
                 return true;
             }
-            catch 
+            catch (Exception ex)
             {
-
                 return false;
             }
             

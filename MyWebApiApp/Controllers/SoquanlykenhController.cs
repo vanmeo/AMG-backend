@@ -175,5 +175,19 @@ namespace AMGAPI.Controllers
                 return Content(ex.Message);
             }
         }
+        [HttpPost("[AddAray]")]
+        public IActionResult AddNDByArray(List<NguoidungMobile> DSNguoiDungMobile, string idsokenh, string idcanbotao)
+        {
+            try
+            {
+                
+                _SoquanlykenhRepository.AddArray(idsokenh,DSNguoiDungMobile, idcanbotao);
+                return Ok("Success");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
     }
 }
