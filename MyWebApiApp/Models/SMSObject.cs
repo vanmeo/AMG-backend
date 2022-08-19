@@ -13,5 +13,6 @@ namespace AMGAPI.Models
         public string NoiDung { get; set; }
         public string DSSdtNhan { get; set; }
         public string DSFile { get; set; }
+        public string DSTenFile { get; set; }
     }
 }

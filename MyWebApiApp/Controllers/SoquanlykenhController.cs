@@ -175,7 +175,7 @@ namespace AMGAPI.Controllers
                 return Content(ex.Message);
             }
         }
-        [HttpPost("[AddAray]")]
+        [HttpPost("[action]")]
         public IActionResult AddNDByArray(List<NguoidungMobile> DSNguoiDungMobile, string idsokenh, string idcanbotao)
         {
             try

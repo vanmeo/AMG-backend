@@ -33,6 +33,8 @@ namespace AMGAPI.Data
         public bool NhanSMS { get; set; }
         public DateTime? Ngaytao { get; set; }
         public DateTime? Ngaysua { get; set; }
+       
+        public string? Public_Key  { get; set; }
         public bool Trangthai { get; set; }
         //relationship
         public virtual Soquanlykenh Sokenh { get; set; }

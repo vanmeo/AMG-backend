@@ -69,7 +69,7 @@ namespace AMGAPI.Services
         }
         public bool sendsms(string Sodienthoaigui, string IdKenh, string tieude, string sms, string DsSdtnhan)
         {
-           
+
             try
             {
                 var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
@@ -102,13 +102,13 @@ namespace AMGAPI.Services
                                 _DSNhan += "," + item;
                             _context.Add(_Thongbao);
                             _context.SaveChanges();
-                           
+
                         }
                     }
                 }
                 if (_DSNhan != "")
                 {
-                    string ds=_DSNhan.Substring(1, _DSNhan.Length-1);
+                    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
 
                     SMSObject obj = new SMSObject
                     {
@@ -121,7 +121,7 @@ namespace AMGAPI.Services
                     };
 
                     string jsonStr = JsonConvert.SerializeObject(obj);
-                    string path = _Datadiodeconfig.OutJson + "//"+"sendsms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
+                    string path = _Datadiodeconfig.OutJson + "//" + "sendsms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
                     File.WriteAllText(path, jsonStr);
                 }
                 return true;
@@ -130,7 +130,7 @@ namespace AMGAPI.Services
             {
                 return false;
             }
-            
+
         }
 
         public bool sendsmsfile(string Sodienthoaigui, string tieude, string IdKenh, string sms, string DSsdtnhan, List<IFormFile> Files)
@@ -140,6 +140,9 @@ namespace AMGAPI.Services
                 var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
                 // var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == DSsdtnhan);
                 string _DSNhan = "";
+                string _PubKeyNhan = "";
+                string _DSIDThongbao = "";
+               
                 foreach (var item in DSsdtnhan.Split(','))
                 {
                     var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == item);
@@ -164,45 +167,84 @@ namespace AMGAPI.Services
                                 Trangthai = nguoidung.Trangthai
                             };
                             if (nguoidung.Trangthai)
+                            {
                                 _DSNhan += "," + item;
+                                if (nguoidung.Public_Key != null)
+                                    _PubKeyNhan += "," + nguoidung.Public_Key;
+                            }
                             _context.Add(_Thongbao);
                             _context.SaveChanges();
-                            foreach (var file in Files)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.ContentRootPath, "FileThongBao", file.FileName);
-                                using (var stream = new FileStream(filepath, FileMode.Create))
-                                {
-                                    file.CopyTo(stream);
-                                }
-                                if (nguoidung.Trangthai)
-                                {
-                                    string filepathdiode = Path.Combine(_Datadiodeconfig.FileSms, file.FileName);
-                                    using (var stream = new FileStream(filepathdiode, FileMode.Create))
-                                    {
-                                        file.CopyTo(stream);
-                                    }
-                                }
-                                var _Thongbao_file = new DmThongbao_File
-                                {
-                                    IdThongbao = _Thongbao.Id,
-                                    File_Url = filepath,
-                                    TenFile = file.FileName
-                                };
-                                _context.Add(_Thongbao_file);
-                                _context.SaveChanges();
-                            }
+                            _DSIDThongbao += "," + _Thongbao.Id;
+
                         }
                     }
 
                 }
+                // Lưu với từng người một vì mã hóa
+                string _DStenfile = "";
+                string _DSfile = "";
+                foreach (var file in Files)
+                {
+                    //Hàm mã hóa file thực hiện ở đây với Pubkey
+                    // Lưu file trong thư mục web
+                    string fileName =Path.GetFileNameWithoutExtension(file.FileName) + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "")+Path.GetExtension(file.FileName);
+                    string filepath = Path.Combine(_webHostEnvironment.ContentRootPath, "FileThongBao",fileName);
+                    using (var stream = new FileStream(filepath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    string filepathdiode = "";
+                    if (_DSNhan.Length > 1)
+                    {
+                        filepathdiode= Path.Combine(_Datadiodeconfig.FileSms,fileName);
+                        using (var stream = new FileStream(filepathdiode, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+                        _DStenfile += "," + file.FileName;
+                        _DSfile += "," + fileName;
+                    }
+                    foreach (var item in _DSIDThongbao.Split(','))
+                    {
+                        if(item.Length>1)
+                        {
+                            var _Thongbao_file = new DmThongbao_File
+                            {
+                                IdThongbao = Guid.Parse(item),
+                                File_Url = filepath,
+                                TenFile = file.FileName
+                            };
+                            _context.Add(_Thongbao_file);
+                            _context.SaveChanges();
+                        }    
+                    }
+                }
+                if (_DSNhan != "")
+                {
+                    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
+                    string dsfile = _DSfile.Substring(1, _DSfile.Length - 1);
+                    string dstenfile = _DStenfile.Substring(1, _DStenfile.Length - 1);
+                    SMSObject obj = new SMSObject
+                    {
+                        SdtGui = Sodienthoaigui,
+                        Tieude = tieude,
+                        NoiDung = sms,
+                        idKenh = IdKenh,
+                        DSSdtNhan = ds,
+                        DSFile = dsfile,
+                        DSTenFile=dstenfile
+                    };
+                    string jsonStr = JsonConvert.SerializeObject(obj);
+                    string path = _Datadiodeconfig.OutJson + "//" + "sendFilesms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
+                    File.WriteAllText(path, jsonStr);
+                }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-
                 return false;
             }
-           
+
         }
     }
 }
