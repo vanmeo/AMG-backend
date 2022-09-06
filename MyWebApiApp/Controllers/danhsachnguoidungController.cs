@@ -129,7 +129,20 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        [HttpGet("KichHoat")]
+        //[Authorize(Roles = "CAPBAC_DELETE")]
+        public IActionResult KichHoatTK(string id)
+        {
+            try
+            {
+                _DanhsachnguoidungRepository.KichHoatTK(id);
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpPost]
         public IActionResult Add(DanhsachnguoidungVM danhsachnguoidungvm)
         {

@@ -17,5 +17,6 @@ namespace AMGAPI.Services.Base
         Danhsachnguoidung Add(DanhsachnguoidungVM danhsachnguoidungvm);
         bool Update(Danhsachnguoidung nguoidung);
         bool Delete(string id);
+        bool KichHoatTK(string id);
     }
 }

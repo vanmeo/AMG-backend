@@ -178,7 +178,7 @@ namespace AMGAPI.Services
                     if (SMS == "Có")
                         nhansms = true;
                     var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == sodienthoai);
-                   if(nd==null)
+                    if (nd == null)
                     {
                         Danhsachnguoidung user = new Danhsachnguoidung()
                         {
@@ -194,7 +194,7 @@ namespace AMGAPI.Services
                         };
                         _context.Add(user);
                         _context.SaveChanges();
-                    }    
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -259,7 +259,6 @@ namespace AMGAPI.Services
             }
             catch (Exception)
             {
-
                 return false;
             }
             return true;

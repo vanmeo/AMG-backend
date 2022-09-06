@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AMGAPI.Services
 {
+
     public class DanhsachnguoidungRepository : IDanhsachnguoidungRepository
     {
         private readonly MyDbContext _context;
@@ -115,6 +116,21 @@ namespace AMGAPI.Services
                 _nd.Ngaysua = DateTime.Now;
                 _nd.Trangthai = danhsachnguoidung.Trangthai;
                 _nd.Sodienthoai = danhsachnguoidung.Sodienthoai;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool KichHoatTK(string id)
+        {
+            var _nd = _context.Danhsachnguoidungs.SingleOrDefault(p => p.Id.ToString() == id);
+            if (_nd != null)
+            {
+   
+                _nd.Ngaysua = DateTime.Now;
+                _nd.Trangthai = true;
+      
                 _context.SaveChanges();
                 return true;
             }
