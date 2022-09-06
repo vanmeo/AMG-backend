@@ -177,20 +177,24 @@ namespace AMGAPI.Services
                     bool nhansms = false;
                     if (SMS == "Có")
                         nhansms = true;
-                    Danhsachnguoidung user = new Danhsachnguoidung()
+                    var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == sodienthoai);
+                   if(nd==null)
                     {
-                        Ten = name,
-                        Sodienthoai = sodienthoai,
-                        IdDonvi = soQuanlykenh.IdDonvi,
-                        SokenhId = Guid.Parse(idkenh),
-                        CanboId = Guid.Parse(idcanbotao),
-                        Ngaytao = DateTime.UtcNow,
-                        Ngaysua = DateTime.UtcNow,
-                        Trangthai = false,
-                        NhanSMS = nhansms
-                    };
-                    _context.Add(user);
-                    _context.SaveChanges();
+                        Danhsachnguoidung user = new Danhsachnguoidung()
+                        {
+                            Ten = name,
+                            Sodienthoai = sodienthoai,
+                            IdDonvi = soQuanlykenh.IdDonvi,
+                            SokenhId = Guid.Parse(idkenh),
+                            CanboId = Guid.Parse(idcanbotao),
+                            Ngaytao = DateTime.UtcNow,
+                            Ngaysua = DateTime.UtcNow,
+                            Trangthai = false,
+                            NhanSMS = nhansms
+                        };
+                        _context.Add(user);
+                        _context.SaveChanges();
+                    }    
                 }
                 catch (Exception ex)
                 {
@@ -228,24 +232,29 @@ namespace AMGAPI.Services
         {
             var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh);
             List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
+
             try
             {
                 foreach (var item in DS)
                 {
-                    Danhsachnguoidung user = new Danhsachnguoidung()
+                    var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == item.SDT);
+                    if (nd == null)
                     {
-                        Ten = item.Ten,
-                        Sodienthoai = item.SDT,
-                        IdDonvi = soQuanlykenh.IdDonvi,
-                        SokenhId = Guid.Parse(idkenh),
-                        CanboId = Guid.Parse(idcanbotao),
-                        Ngaytao = DateTime.UtcNow,
-                        Ngaysua = DateTime.UtcNow,
-                        Trangthai = false,
-                        NhanSMS = item.SendSMS
-                    };
-                    _context.Add(user);
-                    _context.SaveChanges();
+                        Danhsachnguoidung user = new Danhsachnguoidung()
+                        {
+                            Ten = item.Ten,
+                            Sodienthoai = item.SDT,
+                            IdDonvi = soQuanlykenh.IdDonvi,
+                            SokenhId = Guid.Parse(idkenh),
+                            CanboId = Guid.Parse(idcanbotao),
+                            Ngaytao = DateTime.UtcNow,
+                            Ngaysua = DateTime.UtcNow,
+                            Trangthai = false,
+                            NhanSMS = item.SendSMS
+                        };
+                        _context.Add(user);
+                        _context.SaveChanges();
+                    }
                 }
             }
             catch (Exception)
