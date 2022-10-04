@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj": {}
+    "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {}
   },
   "projects": {
-    "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj": {
+    "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
         "projectName": "AMGAPI",
-        "projectPath": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj",
+        "projectPath": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
         "packagesPath": "C:\\Users\\Lisa\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\obj\\",
+        "outputPath": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lisa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -97,7 +97,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -109,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.409\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

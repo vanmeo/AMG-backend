@@ -110,7 +110,7 @@ namespace AMGAPI.Controllers
                 _SoquanlykenhRepository.Update(Sokenh,tencanbosua);
                 return NoContent();
             }
-            catch
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

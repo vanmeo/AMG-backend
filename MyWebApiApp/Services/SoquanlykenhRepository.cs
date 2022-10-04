@@ -24,6 +24,7 @@ namespace AMGAPI.Services
             {
                 Dangkykenh_DuyetId = soquanlykenhvm.Dangkykenh_DuyetId,
                 IP_Internalgate = soquanlykenhvm.IP_Internalgate,
+                Ten_Kihieukenh=soquanlykenhvm.Ten_Kihieukenh,
                 TenUngdung = soquanlykenhvm.TenUngdung,
                 IP_Ungdung = soquanlykenhvm.IP_Ungdung,
                 Port_Internalgate = soquanlykenhvm.Port_Internalgate,
@@ -212,6 +213,7 @@ namespace AMGAPI.Services
             {
                 _Sokenh.Dangkykenh_DuyetId = Sokenh.Dangkykenh_DuyetId;
                 _Sokenh.IP_Internalgate = Sokenh.IP_Internalgate;
+                _Sokenh.Ten_Kihieukenh = Sokenh.Ten_Kihieukenh;
                 _Sokenh.TenUngdung = Sokenh.TenUngdung;
                 _Sokenh.IP_Ungdung = Sokenh.IP_Ungdung;
                 _Sokenh.Port_Internalgate = Sokenh.Port_Internalgate;

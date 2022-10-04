@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t21PVjeLJDkDHWr2hSIzgPqEKbE6asJ3dJVvUTHPnQskKhTDrF7MtDGYy9+7SgYA/l0PHlD5Ce9y2qllkdYcEA==",
+  "dgSpecHash": "4Yc2hIUmfpWhdGdpcLnhTG0OTygOXG/QQXnQS/0dKY0NgHCEwvdpd+GzS33Wug++StZ2RVf4Yq4HQ9cWDTW40Q==",
   "success": true,
-  "projectFilePath": "D:\\Code\\AMG\\InGate_amg_backend\\MyWebApiApp\\AMGAPI.csproj",
+  "projectFilePath": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lisa\\.nuget\\packages\\aspnetcore.reporting\\2.1.0\\aspnetcore.reporting.2.1.0.nupkg.sha512",
     "C:\\Users\\Lisa\\.nuget\\packages\\aspnetcore.reportingservices\\2.1.0\\aspnetcore.reportingservices.2.1.0.nupkg.sha512",

@@ -15,6 +15,9 @@ namespace AMGAPI.Data
         // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid Dangkykenh_DuyetId { get; set; }
+        [StringLength(100)]
+        public string Ten_Kihieukenh { get; set; }
+        
         [Required]
         [StringLength(100)]
         public string TenUngdung { get; set; }

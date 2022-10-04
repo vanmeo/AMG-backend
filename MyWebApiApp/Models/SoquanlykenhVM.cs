@@ -12,7 +12,7 @@ namespace AMGAPI.Models
         public Guid Dangkykenh_DuyetId { get; set; }
         [Required]
         public Guid IdDonvi { get; set; }
-        //public string TenDonvi { get; set; }
+        public string Ten_Kihieukenh { get; set; }
         public string TenUngdung { get; set; }
         public Guid UngdungId { get; set; }
         public string IP_Internalgate { get; set; }
