@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace AMGAPI.Services
 {
-
     public class DanhsachnguoidungRepository : IDanhsachnguoidungRepository
     {
         private readonly MyDbContext _context;

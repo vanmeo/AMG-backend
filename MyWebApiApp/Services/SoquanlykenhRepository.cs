@@ -190,7 +190,8 @@ namespace AMGAPI.Services
                             CanboId = Guid.Parse(idcanbotao),
                             Ngaytao = DateTime.UtcNow,
                             Ngaysua = DateTime.UtcNow,
-                            Trangthai = false,
+                            //Sau nho sua lai
+                            Trangthai = true,
                             NhanSMS = nhansms
                         };
                         _context.Add(user);
@@ -251,7 +252,8 @@ namespace AMGAPI.Services
                             CanboId = Guid.Parse(idcanbotao),
                             Ngaytao = DateTime.UtcNow,
                             Ngaysua = DateTime.UtcNow,
-                            Trangthai = false,
+                            //Sau nho sua lai thanh false dang de luon kich hoat
+                            Trangthai = true,
                             NhanSMS = item.SendSMS
                         };
                         _context.Add(user);

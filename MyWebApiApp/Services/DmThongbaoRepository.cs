@@ -19,13 +19,14 @@ namespace AMGAPI.Services
         private readonly MyDbContext _context;
         private readonly SMSService _smsservice;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly Datadiodeconfig _Datadiodeconfig;
+       // private readonly Datadiodeconfig _Datadiodeconfig;
 
-        public DmThongbaoRepository(MyDbContext context, IOptionsMonitor<Datadiodeconfig> optionsMonitorDatadiode, IOptionsMonitor<SMSService> optionsMonitor, IWebHostEnvironment webHostEnvironment)
+        //public DmThongbaoRepository(MyDbContext context, IOptionsMonitor<Datadiodeconfig> optionsMonitorDatadiode, IOptionsMonitor<SMSService> optionsMonitor, IWebHostEnvironment webHostEnvironment)
+        public DmThongbaoRepository(MyDbContext context,IOptionsMonitor<SMSService> optionsMonitor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _smsservice = optionsMonitor.CurrentValue;
-            _Datadiodeconfig = optionsMonitorDatadiode.CurrentValue;
+           // _Datadiodeconfig = optionsMonitorDatadiode.CurrentValue;
             _webHostEnvironment = webHostEnvironment;
         }
         // Thêm mới danh mục với ViewModel cho trước
@@ -69,7 +70,6 @@ namespace AMGAPI.Services
         }
         public bool sendsms(string Sodienthoaigui, string IdKenh, string tieude, string sms, string DsSdtnhan)
         {
-
             try
             {
                 var soquanly = _context.Soquanlykenhs.SingleOrDefault(sokenh => sokenh.Id.ToString() == IdKenh && sokenh.Trangthai == 1);
@@ -106,24 +106,34 @@ namespace AMGAPI.Services
                         }
                     }
                 }
-                if (_DSNhan != "")
-                {
-                    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
+                //if (_DSNhan != "")
+                //{
+                //    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
+                //    var _Thongbao = new SMSObject
+                //    {
+                //        idBang = 2,
+                //        sdtgui = Sodienthoaigui,
+                //        noidung = sms,
+                //        tieude = tieude,
+                //        sdtnhan = ds,
+                //        DSTenfile = new List<string>(),
+                //        CreateDate=DateTime.Now
+                //    };
 
-                    SMSObject obj = new SMSObject
-                    {
-                        SdtGui = Sodienthoaigui,
-                        Tieude = tieude,
-                        NoiDung = sms,
-                        idKenh = IdKenh,
-                        DSSdtNhan = ds,
-                        DSFile = ""
-                    };
+                    ////SMSObject1 obj = new SMSObject1
+                    ////{
+                    ////    SdtGui = Sodienthoaigui,
+                    ////    Tieude = tieude,
+                    ////    NoiDung = sms,
+                    ////    idKenh = IdKenh,
+                    ////    DSSdtNhan = ds,
+                    ////    DSFile = ""
+                    ////};
 
-                    string jsonStr = JsonConvert.SerializeObject(obj);
-                    string path = _Datadiodeconfig.OutJson + "//" + "sendsms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
-                    File.WriteAllText(path, jsonStr);
-                }
+                    ////string jsonStr = JsonConvert.SerializeObject(obj);
+                    ////string path = _Datadiodeconfig.OutJson + "//" + "sendsms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
+                    ////File.WriteAllText(path, jsonStr);
+               // }
                 return true;
             }
             catch (Exception ex)
@@ -181,8 +191,8 @@ namespace AMGAPI.Services
 
                 }
                 // Lưu với từng người một vì mã hóa
-                string _DStenfile = "";
-                string _DSfile = "";
+                //string _DStenfile = "";
+                //string _DSfile = "";
                 foreach (var file in Files)
                 {
                     //Hàm mã hóa file thực hiện ở đây với Pubkey
@@ -193,17 +203,17 @@ namespace AMGAPI.Services
                     {
                         file.CopyTo(stream);
                     }
-                    string filepathdiode = "";
-                    if (_DSNhan.Length > 1)
-                    {
-                        filepathdiode= Path.Combine(_Datadiodeconfig.FileSms,fileName);
-                        using (var stream = new FileStream(filepathdiode, FileMode.Create))
-                        {
-                            file.CopyTo(stream);
-                        }
-                        _DStenfile += "," + file.FileName;
-                        _DSfile += "," + fileName;
-                    }
+                    //string filepathdiode = "";
+                    //if (_DSNhan.Length > 1)
+                    //{
+                    //    filepathdiode= Path.Combine(_Datadiodeconfig.FileSms,fileName);
+                    //    using (var stream = new FileStream(filepathdiode, FileMode.Create))
+                    //    {
+                    //        file.CopyTo(stream);
+                    //    }
+                    //    _DStenfile += "," + file.FileName;
+                    //    _DSfile += "," + fileName;
+                    //}
                     foreach (var item in _DSIDThongbao.Split(','))
                     {
                         if(item.Length>1)
@@ -219,25 +229,25 @@ namespace AMGAPI.Services
                         }    
                     }
                 }
-                if (_DSNhan != "")
-                {
-                    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
-                    string dsfile = _DSfile.Substring(1, _DSfile.Length - 1);
-                    string dstenfile = _DStenfile.Substring(1, _DStenfile.Length - 1);
-                    SMSObject obj = new SMSObject
-                    {
-                        SdtGui = Sodienthoaigui,
-                        Tieude = tieude,
-                        NoiDung = sms,
-                        idKenh = IdKenh,
-                        DSSdtNhan = ds,
-                        DSFile = dsfile,
-                        DSTenFile=dstenfile
-                    };
-                    string jsonStr = JsonConvert.SerializeObject(obj);
-                    string path = _Datadiodeconfig.OutJson + "//" + "sendFilesms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
-                    File.WriteAllText(path, jsonStr);
-                }
+                //if (_DSNhan != "")
+                //{
+                //    string ds = _DSNhan.Substring(1, _DSNhan.Length - 1);
+                //    string dsfile = _DSfile.Substring(1, _DSfile.Length - 1);
+                //    string dstenfile = _DStenfile.Substring(1, _DStenfile.Length - 1);
+                //    SMSObject1 obj = new SMSObject1
+                //    {
+                //        SdtGui = Sodienthoaigui,
+                //        Tieude = tieude,
+                //        NoiDung = sms,
+                //        idKenh = IdKenh,
+                //        DSSdtNhan = ds,
+                //        DSFile = dsfile,
+                //        DSTenFile=dstenfile
+                //    };
+                //    string jsonStr = JsonConvert.SerializeObject(obj);
+                //    string path = _Datadiodeconfig.OutJson + "//" + "sendFilesms_" + DateTime.Now.ToString().Replace(" ", "").Replace("/", "").Replace(":", "") + ".json";
+                //    File.WriteAllText(path, jsonStr);
+                //}
                 return true;
             }
             catch (Exception ex)

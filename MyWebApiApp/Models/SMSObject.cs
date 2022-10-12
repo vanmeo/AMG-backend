@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AMGAPI.Models
 {
-    public class SMSObject
+    public class SMSObject1
     {
         public string SdtGui { get; set; }
         public string idKenh { get; set; }
