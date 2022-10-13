@@ -19,22 +19,29 @@ namespace AMGAPI.Services
         // Thêm mới danh mục với ViewModel cho trước
         public Danhsachnguoidung Add(DanhsachnguoidungVM danhsachnguoidungvm)
         {
-            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id == danhsachnguoidungvm.SokenhId);
-            var _danhsachnguoidung = new Danhsachnguoidung
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id == danhsachnguoidungvm.SokenhId&&x.Trangthai==1);
+
+            if (soQuanlykenh != null)
             {
-                Ten = danhsachnguoidungvm.Ten,
-                Sodienthoai = danhsachnguoidungvm.Sodienthoai,
-                IdDonvi=soQuanlykenh.IdDonvi,
-                SokenhId = danhsachnguoidungvm.SokenhId,
-                CanboId = danhsachnguoidungvm.CanboId,
-                Ngaytao = DateTime.UtcNow,
-                Ngaysua = DateTime.UtcNow,
-                NhanSMS = danhsachnguoidungvm.NhanSMS,
-                Trangthai = false
-            };
-            _context.Add(_danhsachnguoidung);
-            _context.SaveChanges();
-            return _danhsachnguoidung;
+                var _danhsachnguoidung = new Danhsachnguoidung
+                {
+                    Ten = danhsachnguoidungvm.Ten,
+                    Sodienthoai = danhsachnguoidungvm.Sodienthoai,
+                    IdDonvi = soQuanlykenh.IdDonvi,
+                    SokenhId = danhsachnguoidungvm.SokenhId,
+                    CanboId = danhsachnguoidungvm.CanboId,
+                    Ngaytao = DateTime.UtcNow,
+                    Ngaysua = DateTime.UtcNow,
+                    NhanSMS = danhsachnguoidungvm.NhanSMS,
+                    Trangthai = false
+                };
+                _context.Add(_danhsachnguoidung);
+                _context.SaveChanges();
+                return _danhsachnguoidung;
+            }
+            else
+                return null;
+            
         }
         // Thiết lập is_Delete=true hoặc Status=false chứ không xóa vật lý 
         public bool Delete(string id)
