@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {}
+    "C:\\Users\\BTL86\\code\\projects\\AMG\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {
+    "C:\\Users\\BTL86\\code\\projects\\AMG\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
+        "projectUniqueName": "C:\\Users\\BTL86\\code\\projects\\AMG\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
         "projectName": "AMGAPI",
-        "projectPath": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
-        "packagesPath": "C:\\Users\\Lisa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lisa\\source\\repos\\AMG-backend\\MyWebApiApp\\obj\\",
+        "projectPath": "C:\\Users\\BTL86\\code\\projects\\AMG\\AMG-backend\\MyWebApiApp\\AMGAPI.csproj",
+        "packagesPath": "C:\\Users\\BTL86\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\BTL86\\code\\projects\\AMG\\AMG-backend\\MyWebApiApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lisa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BTL86\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -110,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
