@@ -162,54 +162,58 @@ namespace AMGAPI.Services
 
         public bool Themdanhsachnguoidung(string idkenh, string idcanbotao, string filename)
         {
-            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh);
-            List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
-            var package = new ExcelPackage(new FileInfo(filename));
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
-            for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh&& x.Trangthai==1);
+            if(soQuanlykenh!=null)
             {
-                try
+                List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
+                var package = new ExcelPackage(new FileInfo(filename));
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+                for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
                 {
-                    int j = 1;
-                    string name = workSheet.Cells[i, j++].Value.ToString();
-                    string sodienthoai = workSheet.Cells[i, j++].Value.ToString();
-                    string SMS = workSheet.Cells[i, j++].Value.ToString();
-                    bool nhansms = false;
-                    if (SMS == "Có")
-                        nhansms = true;
-                    var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == sodienthoai);
-                    if (nd == null)
+                    try
                     {
-                        Danhsachnguoidung user = new Danhsachnguoidung()
+                        int j = 1;
+                        string name = workSheet.Cells[i, j++].Value.ToString();
+                        string sodienthoai = workSheet.Cells[i, j++].Value.ToString();
+                        string SMS = workSheet.Cells[i, j++].Value.ToString();
+                        bool nhansms = false;
+                        if (SMS == "Có")
+                            nhansms = true;
+                        var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == sodienthoai);
+                        if (nd == null)
                         {
-                            Ten = name,
-                            Sodienthoai = sodienthoai,
-                            IdDonvi = soQuanlykenh.IdDonvi,
-                            SokenhId = Guid.Parse(idkenh),
-                            CanboId = Guid.Parse(idcanbotao),
-                            Ngaytao = DateTime.UtcNow,
-                            Ngaysua = DateTime.UtcNow,
-                            //Sau nho sua lai
-                            Trangthai = true,
-                            NhanSMS = nhansms
-                        };
-                        _context.Add(user);
-                        _context.SaveChanges();
+                            Danhsachnguoidung user = new Danhsachnguoidung()
+                            {
+                                Ten = name,
+                                Sodienthoai = sodienthoai,
+                                IdDonvi = soQuanlykenh.IdDonvi,
+                                SokenhId = Guid.Parse(idkenh),
+                                CanboId = Guid.Parse(idcanbotao),
+                                Ngaytao = DateTime.UtcNow,
+                                Ngaysua = DateTime.UtcNow,
+                                //Sau nho sua lai
+                                Trangthai = true,
+                                NhanSMS = nhansms
+                            };
+                            _context.Add(user);
+                            _context.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
                     }
                 }
-                catch (Exception ex)
-                {
-                    return false;
-                }
+                return true;
             }
-            return true;
+            return false;
+           
         }
 
         public bool Update(Soquanlykenh Sokenh, string tencanbosua)
         {
             var _Sokenh = _context.Soquanlykenhs.SingleOrDefault(cb => cb.Id == Sokenh.Id);
-
             if (_Sokenh != null)
             {
                 _Sokenh.Dangkykenh_DuyetId = Sokenh.Dangkykenh_DuyetId;
@@ -233,39 +237,44 @@ namespace AMGAPI.Services
 
         public bool AddArray(string idkenh, List<NguoidungMobile> DS, string idcanbotao)
         {
-            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh);
-            List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
-
-            try
+            var soQuanlykenh = _context.Soquanlykenhs.FirstOrDefault(x => x.Id.ToString() == idkenh&& x.Trangthai==1);
+            if (soQuanlykenh != null)
             {
-                foreach (var item in DS)
+                List<Danhsachnguoidung> userList = new List<Danhsachnguoidung>();
+                try
                 {
-                    var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == item.SDT);
-                    if (nd == null)
+                    foreach (var item in DS)
                     {
-                        Danhsachnguoidung user = new Danhsachnguoidung()
+                        var nd = _context.Danhsachnguoidungs.SingleOrDefault(nd => nd.SokenhId.ToString() == idkenh && nd.Sodienthoai == item.SDT);
+                        if (nd == null)
                         {
-                            Ten = item.Ten,
-                            Sodienthoai = item.SDT,
-                            IdDonvi = soQuanlykenh.IdDonvi,
-                            SokenhId = Guid.Parse(idkenh),
-                            CanboId = Guid.Parse(idcanbotao),
-                            Ngaytao = DateTime.UtcNow,
-                            Ngaysua = DateTime.UtcNow,
-                            //Sau nho sua lai thanh false dang de luon kich hoat
-                            Trangthai = true,
-                            NhanSMS = item.SendSMS
-                        };
-                        _context.Add(user);
-                        _context.SaveChanges();
+                            Danhsachnguoidung user = new Danhsachnguoidung()
+                            {
+                                Ten = item.Ten,
+                                Sodienthoai = item.SDT,
+                                IdDonvi = soQuanlykenh.IdDonvi,
+                                SokenhId = Guid.Parse(idkenh),
+                                CanboId = Guid.Parse(idcanbotao),
+                                Ngaytao = DateTime.UtcNow,
+                                Ngaysua = DateTime.UtcNow,
+                                //Sau nho sua lai thanh false dang de luon kich hoat
+                                Trangthai = true,
+                                NhanSMS = item.SendSMS
+                            };
+                            _context.Add(user);
+                            _context.SaveChanges();
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
             }
-            catch (Exception)
-            {
+            else
                 return false;
-            }
-            return true;
+           
         }
     }
 }
