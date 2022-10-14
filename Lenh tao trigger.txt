@@ -1,0 +1,48 @@
+create trigger [dbo].[trackingChange_insert] on [dbo].[TrackingChange] after insert
+as
+Declare @cmd sysname;
+Declare @Name nvarchar(max);
+declare @id nvarchar(max);
+declare @path nvarchar(max);
+
+select @Name= (select * from inserted for json auto);
+select @id= (select id from inserted);
+select @path= 'D:\JsonTrackingIn\' + @id + '_info.json'
+SET @cmd = 'echo '+@Name+' > ' + @path;
+ exec xp_cmdshell @cmd
+
+create trigger [dbo].[Soquanlykenh_update] on [dbo].[Soquanlykenh] after update
+as
+begin
+SET NOCOUNT on;
+Declare @cmd int;
+set @cmd= (select Trangthai from inserted);
+if  @cmd=1
+insert into TrackingChange(idbang,Status, ID_ROW) select '1','1', ID from inserted
+end
+
+
+create trigger [dbo].[Danhsachnguoidung_insert] on [dbo].[Danhsachnguoidung] after insert
+as
+begin
+insert into TrackingChange(idbang,Status, ID_ROW) select '3','0', ID from inserted
+end
+create trigger [dbo].[Danhsachnguoidung_update] on [dbo].[Danhsachnguoidung] after update
+as
+begin
+SET NOCOUNT on;
+Declare @cmd int;
+set @cmd= (select Trangthai from inserted);
+if @cmd =1
+insert into TrackingChange(idbang,Status, ID_ROW) select '3','1', ID from inserted
+end
+
+
+create trigger [dbo].[DmThongbao_insert] on [dbo].[DmThongbao] after insert
+as
+begin
+Declare @cmd int;
+set @cmd= (select Trangthai from inserted);
+if @cmd=1
+insert into TrackingChange(idbang,Status, ID_ROW) select '2','0', ID from inserted
+end

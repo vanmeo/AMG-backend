@@ -115,6 +115,21 @@ namespace AMGAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrackingChange",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IDBang = table.Column<int>(type: "int", nullable: false),
+                    ID_ROW = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrackingChange", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DmFeature",
                 columns: table => new
                 {
@@ -526,7 +541,7 @@ namespace AMGAPI.Migrations
             migrationBuilder.InsertData(
                 table: "ThongsoHethong",
                 columns: new[] { "Id", "CreateDate", "Datadiode_IP", "Datadiode_Port", "Datadiode_Token", "KichthuocFilesMax", "ModifiedDate", "TanSuatXoanhatky_ngay", "TansuatQuet_Phut" },
-                values: new object[] { new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), new DateTime(2022, 10, 14, 0, 36, 56, 152, DateTimeKind.Utc).AddTicks(2411), "1.1.1.1", 5033, "123", 1.0, new DateTime(2022, 10, 14, 0, 36, 56, 152, DateTimeKind.Utc).AddTicks(2642), 1.0, 10 });
+                values: new object[] { new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(1794), "1.1.1.1", 5033, "123", 5120.0, new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(2055), 1.0, 10 });
 
             migrationBuilder.InsertData(
                 table: "Canbo",
@@ -538,8 +553,8 @@ namespace AMGAPI.Migrations
                 columns: new[] { "Id", "CanboDangkyId", "ID_Canbodangky", "IP_Ungdung", "IdDonvi", "Log_process", "Ngayduyet", "Ngaysua", "Ngaytao", "Port_Ungdung", "TenNguoidangky", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
                 values: new object[,]
                 {
-                    { new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(4572), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(4147), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(3907), 80, "Đc Vân", "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
-                    { new Guid("37f70f55-7dcb-4ca5-b0c8-7466b9cedf3d"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(5132), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(5131), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(5129), 80, "Đc Minh", "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
+                    { new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6019), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(5571), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(5327), 80, "Đc Vân", "CĐ-ĐH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
+                    { new Guid("37f70f55-7dcb-4ca5-b0c8-7466b9cedf3d"), null, new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6618), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6617), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6615), 80, "Đc Minh", "CĐN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
                 });
 
             migrationBuilder.InsertData(
@@ -563,8 +578,8 @@ namespace AMGAPI.Migrations
                 columns: new[] { "Id", "Canbothamdinh", "DangkykenhId", "ID_Canboduyet", "IP_Internalgate", "IdDonvi", "Log_process", "NgayTao", "Ngaysua", "Port_Internalgate", "TenUngdung", "Trangthai", "UngdungId", "is_Delete" },
                 values: new object[,]
                 {
-                    { new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(7496), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(7778), 80, "CĐ-ĐH", false, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
-                    { new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(8485), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(8487), 80, "CĐN", false, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
+                    { new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(9182), new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(9425), 80, "CĐ-ĐH", false, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false },
+                    { new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "Đồng chí A", new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), "10.10.10.0", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(140), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(142), 80, "CĐN", false, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false }
                 });
 
             migrationBuilder.InsertData(
@@ -586,22 +601,22 @@ namespace AMGAPI.Migrations
             migrationBuilder.InsertData(
                 table: "Soquanlykenh",
                 columns: new[] { "Id", "CanboId", "Dangkykenh_DuyetId", "IP_Internalgate", "IP_Ungdung", "IdDonvi", "Log_process", "NgayHuyKichHoat", "NgayKichHoat", "Ngaysua", "Ngaytao", "Ngayvaoso", "Port_Internalgate", "Port_Ungdung", "TenUngdung", "Ten_Kihieukenh", "Trangthai", "UngdungId", "is_Delete" },
-                values: new object[] { new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "10.10.10.0", "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(2900), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(2675), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(3121), 80, 80, "CĐ-ĐH", "CDDH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false });
+                values: new object[] { new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("6746de28-4d95-4a77-96de-c75a8eb80bc4"), "10.10.10.0", "10.10.10.1", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(5060), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(4824), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(5288), 80, 80, "CĐ-ĐH", "CDDH", 0, new Guid("5f606928-41d0-4b2d-a251-56ed76e1dffd"), false });
 
             migrationBuilder.InsertData(
                 table: "Soquanlykenh",
                 columns: new[] { "Id", "CanboId", "Dangkykenh_DuyetId", "IP_Internalgate", "IP_Ungdung", "IdDonvi", "Log_process", "NgayHuyKichHoat", "NgayKichHoat", "Ngaysua", "Ngaytao", "Ngayvaoso", "Port_Internalgate", "Port_Ungdung", "TenUngdung", "Ten_Kihieukenh", "Trangthai", "UngdungId", "is_Delete" },
-                values: new object[] { new Guid("46988f74-1475-4283-a128-dda4f4b16094"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "10.10.10.0", "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(3754), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(3752), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(3754), 80, 80, "CĐN", "CDN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false });
+                values: new object[] { new Guid("46988f74-1475-4283-a128-dda4f4b16094"), new Guid("00000000-0000-0000-0000-000000000000"), new Guid("97c3636d-cff0-4b80-b426-dc299e373053"), "10.10.10.0", "10.10.10.2", new Guid("574b452c-b586-499b-d7b9-08da44749b96"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6003), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6001), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6004), 80, 80, "CĐN", "CDN", 0, new Guid("16a5a7df-3f2c-49d9-b5ee-024e2487d7e1"), false });
 
             migrationBuilder.InsertData(
                 table: "DmThongbao",
                 columns: new[] { "Id", "Ngaytao", "Noidungtinnhan", "Sodienthoaigui", "Sodienthoainhan", "SoquanlykenhId", "Tieudetinnhan", "Trangthai" },
-                values: new object[] { new Guid("b079a0b9-50b1-4e54-af26-96f1e6576926"), new DateTime(2022, 10, 14, 0, 36, 56, 149, DateTimeKind.Utc).AddTicks(9864), "CĐ-ĐH", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
+                values: new object[] { new Guid("b079a0b9-50b1-4e54-af26-96f1e6576926"), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(1692), "CĐ-ĐH", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
 
             migrationBuilder.InsertData(
                 table: "DmThongbao",
                 columns: new[] { "Id", "Ngaytao", "Noidungtinnhan", "Sodienthoaigui", "Sodienthoainhan", "SoquanlykenhId", "Tieudetinnhan", "Trangthai" },
-                values: new object[] { new Guid("9b773e21-4ee4-4e50-adc7-1edb42dbcfb1"), new DateTime(2022, 10, 14, 0, 36, 56, 150, DateTimeKind.Utc).AddTicks(263), "CĐN", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
+                values: new object[] { new Guid("9b773e21-4ee4-4e50-adc7-1edb42dbcfb1"), new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(1944), "CĐN", null, "0395248002", new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"), null, false });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Canbo_CapbacId",
@@ -774,6 +789,9 @@ namespace AMGAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "ThongsoHethong");
+
+            migrationBuilder.DropTable(
+                name: "TrackingChange");
 
             migrationBuilder.DropTable(
                 name: "DmFeature");

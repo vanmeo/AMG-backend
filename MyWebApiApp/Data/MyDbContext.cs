@@ -33,7 +33,7 @@ namespace AMGAPI.Data
         public DbSet<DmThongbao_File> DmThongbao_Files { get; set; }
         public DbSet<DmBlackWord> dmBlackWords { get; set; }
         public DbSet<Danhsachnguoidung> Danhsachnguoidungs { get; set; }
-        //public DbSet<TrackingChange> TrackingChanges { get; set; }
+        public DbSet<TrackingChange> TrackingChanges { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
