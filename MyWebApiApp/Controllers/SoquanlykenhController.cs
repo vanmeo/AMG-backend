@@ -68,7 +68,7 @@ namespace AMGAPI.Controllers
                     owners.HasPrevious
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-               
+
                 return Ok(owners);
             }
             catch
@@ -99,7 +99,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, Soquanlykenh Sokenh,string tencanbosua)
+        public IActionResult Update(string id, Soquanlykenh Sokenh, string tencanbosua)
         {
             if (id != Sokenh.Id.ToString())
             {
@@ -107,8 +107,13 @@ namespace AMGAPI.Controllers
             }
             try
             {
-                _SoquanlykenhRepository.Update(Sokenh,tencanbosua);
-                return NoContent();
+                if (_SoquanlykenhRepository.checkTenKenh(Sokenh.Ten_Kihieukenh))
+                    return Content("Tên kênh này đã sử dụng đề nghị tạo tên kênh khác");
+                else
+                {
+                    _SoquanlykenhRepository.Update(Sokenh, tencanbosua);
+                    return NoContent();
+                }
             }
             catch (Exception ex)
             {
@@ -117,11 +122,11 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id,string tencanboxoa)
+        public IActionResult Delete(string id, string tencanboxoa)
         {
             try
             {
-                _SoquanlykenhRepository.Delete(id,tencanboxoa);
+                _SoquanlykenhRepository.Delete(id, tencanboxoa);
                 return Ok();
             }
             catch
@@ -129,14 +134,17 @@ namespace AMGAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-       
-       
+
+
         [HttpPost]
-        public IActionResult Add(SoquanlykenhVM Soquanly,string tencanbotao)
+        public IActionResult Add(SoquanlykenhVM Soquanly, string tencanbotao)
         {
             try
             {
-                return Ok(_SoquanlykenhRepository.Add(Soquanly, tencanbotao));
+                if (_SoquanlykenhRepository.checkTenKenh(Soquanly.Ten_Kihieukenh))
+                    return Content("Tạo tên kênh khác tên này đã được sử dụng");
+                else
+                    return Ok(_SoquanlykenhRepository.Add(Soquanly, tencanbotao));
             }
             catch (Exception ex)
             {
@@ -145,11 +153,11 @@ namespace AMGAPI.Controllers
         }
         [HttpPut("ChangeStatus")]
 
-        public IActionResult ChangeStatus(string idso, int trangthai,string tencanbo)
+        public IActionResult ChangeStatus(string idso, int trangthai, string tencanbo)
         {
             try
             {
-                return Ok(_SoquanlykenhRepository.ThaydoiTrangthai(idso, trangthai,tencanbo));
+                return Ok(_SoquanlykenhRepository.ThaydoiTrangthai(idso, trangthai, tencanbo));
             }
             catch (Exception ex)
             {
@@ -180,8 +188,8 @@ namespace AMGAPI.Controllers
         {
             try
             {
-                
-                _SoquanlykenhRepository.AddArray(idsokenh,DSNguoiDungMobile, idcanbotao);
+
+                _SoquanlykenhRepository.AddArray(idsokenh, DSNguoiDungMobile, idcanbotao);
                 return Ok("Success");
             }
             catch (Exception ex)

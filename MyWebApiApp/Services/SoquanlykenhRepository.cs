@@ -2,6 +2,7 @@
 using AMGAPI.Models;
 using AMGAPI.Services.Base;
 using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ namespace AMGAPI.Services
         {
             _context = context;
         }
+
         // Thêm mới danh mục với ViewModel cho trước
         public Soquanlykenh Add(SoquanlykenhVM soquanlykenhvm, string tencanbotaomoi)
         {
@@ -275,6 +277,15 @@ namespace AMGAPI.Services
             else
                 return false;
            
+        }
+
+        public bool checkTenKenh(string tenKenh)
+        {
+            var _Sokenh = _context.Soquanlykenhs.SingleOrDefault(cb => cb.Ten_Kihieukenh == tenKenh);
+            if (_Sokenh != null)
+                return true;
+            else
+                return false;
         }
     }
 }

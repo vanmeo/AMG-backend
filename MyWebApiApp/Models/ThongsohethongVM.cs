@@ -13,8 +13,8 @@ namespace AMGAPI.Models
         public string Datadiode_IP { get; set; }
         public int Datadiode_Port { get; set; }
         public string Datadiode_Token { get; set; }
-        public byte TanSuatXoanhatky_ngay { get; set; }
-        public byte KichthuocFilesMax { get; set; }
+        public double TanSuatXoanhatky_ngay { get; set; }
+        public double KichthuocFilesMax { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ModifiedDate { get; set; }
     }

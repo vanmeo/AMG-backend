@@ -9,6 +9,7 @@ namespace AMGAPI.Services.Base
 {
     public interface ISoquanlykenhRepository
     {
+        bool checkTenKenh(string tenKenh);
         List<Soquanlykenh> GetAll();
         PagedList<Soquanlykenh> getAll(PaginParameters paginParameters);
         List<Soquanlykenh> FindAll(string searchString,string IdDonvi, DateTime from, DateTime to, int Trangthaikenh);

@@ -22,8 +22,8 @@ namespace AMGAPI.Data
         public int Datadiode_Port{ get; set; }
         [StringLength(500)]
         public string? Datadiode_Token { get; set; }
-        public byte TanSuatXoanhatky_ngay { get; set; }
-        public byte KichthuocFilesMax { get; set; }
+        public double TanSuatXoanhatky_ngay { get; set; }
+        public double KichthuocFilesMax { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ModifiedDate { get; set; }
     }

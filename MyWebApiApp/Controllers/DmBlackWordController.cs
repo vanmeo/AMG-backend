@@ -13,7 +13,7 @@ namespace AMGAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DmBlackWordController : ControllerBase
     {
         private readonly IDmBlackWordRepository _DmBlackWordRepository;

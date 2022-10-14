@@ -38,11 +38,11 @@ namespace AMGAPI.Controllers
             }
         }
         [HttpGet("SendSMS")]
-        public IActionResult SendSMS(string sdtgui,string IdKenh, string tieude, string sms, string DSsdtnhan)
+        public IActionResult SendSMS(string sdtgui,string TenKenh, string tieude, string sms, string DSsdtnhan)
         {
             try
             {
-                var Tb = _DmThongbaoRepository.sendsms(sdtgui,IdKenh,tieude,sms,DSsdtnhan);
+                var Tb = _DmThongbaoRepository.sendsms(sdtgui,TenKenh,tieude,sms,DSsdtnhan);
                 if (Tb)
                     return Ok();
                 else
@@ -55,15 +55,17 @@ namespace AMGAPI.Controllers
             }
         }
         [HttpPost("Sendfiles")]
-        public IActionResult Sendfiles(string sodienthoaigui,string IdKenh,string tieude, string sms, string DSsdtnhan, List<IFormFile> Files)
+        public IActionResult Sendfiles(string sodienthoaigui,string TenKenh,string tieude, string sms, string DSsdtnhan, List<IFormFile> Files)
         {
+
+
             try
             {
-                var Tb = _DmThongbaoRepository.sendsmsfile(sodienthoaigui,tieude,IdKenh,sms,DSsdtnhan,Files);
+                var Tb = _DmThongbaoRepository.sendsmsfile(sodienthoaigui,tieude,TenKenh,sms,DSsdtnhan,Files);
                 if (Tb)
                     return Ok(Tb);
                 else
-                    return StatusCode(StatusCodes.Status403Forbidden);
+                    return Content("Kích thước file lớn hơn kích thước cho phép");
             }
             catch
             {
