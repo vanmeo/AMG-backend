@@ -15,6 +15,7 @@ namespace AMGAPI.Models
         public string Datadiode_Token { get; set; }
         public double TanSuatXoanhatky_ngay { get; set; }
         public double KichthuocFilesMax { get; set; }
+        public bool TrangThaiSMS { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ModifiedDate { get; set; }
     }

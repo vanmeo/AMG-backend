@@ -20,6 +20,7 @@ namespace AMGAPI.Services
         private readonly SMSService _smsservice;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private double filesizeMax;
+        private bool TrangthaiSMSservices;
 
         // private readonly Datadiodeconfig _Datadiodeconfig;
 
@@ -88,7 +89,7 @@ namespace AMGAPI.Services
                         var nguoidung = _context.Danhsachnguoidungs.SingleOrDefault(ND => ND.SokenhId.ToString() == IdKenh && ND.Sodienthoai == item);
                         if (soquanly != null && nguoidung != null)
                         {
-                            if (nguoidung.NhanSMS)
+                            if (nguoidung.NhanSMS&&TrangthaiSMSservices)
                             {
                                 string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
                                 WebClient wc = new WebClient();
@@ -129,6 +130,7 @@ namespace AMGAPI.Services
         {
             var dmblackword = _context.dmBlackWords.Select(bw => bw);
             ThongsoHethong ht = _context.ThongsoHethongs.SingleOrDefault();
+            TrangthaiSMSservices = ht.TrangThaiSMS;
             if (ht.KichthuocFilesMax != 0)
                 filesizeMax = ht.KichthuocFilesMax;
             else
@@ -182,7 +184,7 @@ namespace AMGAPI.Services
                             if (nguoidung != null)
                             {
 
-                                if (nguoidung.NhanSMS)
+                                if (nguoidung.NhanSMS&&TrangthaiSMSservices)
                                 {
                                     string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
                                     WebClient wc = new WebClient();

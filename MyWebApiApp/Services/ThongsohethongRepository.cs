@@ -33,6 +33,7 @@ namespace AMGAPI.Services
                 _hethong.Datadiode_Token = Thongsohethong.Datadiode_Token;
                 _hethong.Datadiode_Port = Thongsohethong.Datadiode_Port;
                 _hethong.Datadiode_IP = Thongsohethong.Datadiode_IP;
+                _hethong.TrangThaiSMS = Thongsohethong.TrangThaiSMS;
                 _hethong.ModifiedDate = DateTime.UtcNow;
                 _context.SaveChanges();
                 return true;
