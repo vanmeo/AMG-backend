@@ -91,7 +91,7 @@ namespace AMGAPI.Services
                         {
                             if (nguoidung.NhanSMS&&TrangthaiSMSservices)
                             {
-                                string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
+                                string strURL = _smsservice.services + "u=tckt&pw=tckt&c=" + sms + "&no=" + item;          //BTL86                                                    
                                 WebClient wc = new WebClient();
                                 Stream stream = wc.OpenRead(strURL);
                             }
@@ -186,7 +186,7 @@ namespace AMGAPI.Services
 
                                 if (nguoidung.NhanSMS&&TrangthaiSMSservices)
                                 {
-                                    string strURL = _smsservice + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
+                                    string strURL = _smsservice.services + "u=tckt&pw=tckt-sms&c=" + sms + "&no=" + item;          //BTL86                                                    
                                     WebClient wc = new WebClient();
                                     Stream stream = wc.OpenRead(strURL);
                                 }

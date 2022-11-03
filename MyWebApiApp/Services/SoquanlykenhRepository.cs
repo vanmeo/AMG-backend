@@ -195,7 +195,7 @@ namespace AMGAPI.Services
                                 Ngaytao = DateTime.UtcNow,
                                 Ngaysua = DateTime.UtcNow,
                                 //Sau nho sua lai
-                                Trangthai = true,
+                                Trangthai = false,
                                 NhanSMS = nhansms
                             };
                             _context.Add(user);
@@ -260,7 +260,7 @@ namespace AMGAPI.Services
                                 Ngaytao = DateTime.UtcNow,
                                 Ngaysua = DateTime.UtcNow,
                                 //Sau nho sua lai thanh false dang de luon kich hoat
-                                Trangthai = true,
+                                Trangthai = false,
                                 NhanSMS = item.SendSMS
                             };
                             _context.Add(user);

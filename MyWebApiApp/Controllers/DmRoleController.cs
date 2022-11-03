@@ -13,7 +13,7 @@ namespace AMGAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DmRoleController : ControllerBase
     {
 
@@ -38,7 +38,6 @@ namespace AMGAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public IActionResult GetById(string id)
         {
             try
@@ -60,7 +59,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+    
         public IActionResult Update(string id, DmRole DmNhomquyen)
         {
             if (id != DmNhomquyen.Id.ToString())
@@ -79,7 +78,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+      
         public IActionResult Delete(string id)
         {
             try
@@ -94,7 +93,7 @@ namespace AMGAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+   
 
         public IActionResult Add(DmRoleVM DmNhomquyen)
         {

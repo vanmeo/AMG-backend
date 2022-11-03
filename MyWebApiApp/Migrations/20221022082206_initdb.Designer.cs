@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AMGAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221014012704_initdb")]
+    [Migration("20221022082206_initdb")]
     partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,9 +201,9 @@ namespace AMGAPI.Migrations
                             ID_Canbodangky = new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"),
                             IP_Ungdung = "10.10.10.1",
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
-                            Ngayduyet = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6019),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(5571),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(5327),
+                            Ngayduyet = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(138),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 788, DateTimeKind.Utc).AddTicks(9701),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 788, DateTimeKind.Utc).AddTicks(9465),
                             Port_Ungdung = 80,
                             TenNguoidangky = "Đc Vân",
                             TenUngdung = "CĐ-ĐH",
@@ -217,9 +217,9 @@ namespace AMGAPI.Migrations
                             ID_Canbodangky = new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"),
                             IP_Ungdung = "10.10.10.2",
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
-                            Ngayduyet = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6618),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6617),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(6615),
+                            Ngayduyet = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(719),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(718),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(715),
                             Port_Ungdung = 80,
                             TenNguoidangky = "Đc Minh",
                             TenUngdung = "CĐN",
@@ -301,8 +301,8 @@ namespace AMGAPI.Migrations
                             ID_Canboduyet = new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"),
                             IP_Internalgate = "10.10.10.0",
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
-                            NgayTao = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(9182),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(9425),
+                            NgayTao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(3269),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(3511),
                             Port_Internalgate = 80,
                             TenUngdung = "CĐ-ĐH",
                             Trangthai = false,
@@ -317,8 +317,8 @@ namespace AMGAPI.Migrations
                             ID_Canboduyet = new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"),
                             IP_Internalgate = "10.10.10.0",
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
-                            NgayTao = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(140),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(142),
+                            NgayTao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(4269),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(4272),
                             Port_Internalgate = 80,
                             TenUngdung = "CĐN",
                             Trangthai = false,
@@ -940,7 +940,7 @@ namespace AMGAPI.Migrations
                         new
                         {
                             Id = new Guid("b079a0b9-50b1-4e54-af26-96f1e6576926"),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(1692),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(5691),
                             Noidungtinnhan = "CĐ-ĐH",
                             Sodienthoainhan = "0395248002",
                             SoquanlykenhId = new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"),
@@ -949,7 +949,7 @@ namespace AMGAPI.Migrations
                         new
                         {
                             Id = new Guid("9b773e21-4ee4-4e50-adc7-1edb42dbcfb1"),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(1944),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(5940),
                             Noidungtinnhan = "CĐN",
                             Sodienthoainhan = "0395248002",
                             SoquanlykenhId = new Guid("565b84a8-792f-4bcc-a701-1c7aae1930f0"),
@@ -1164,9 +1164,9 @@ namespace AMGAPI.Migrations
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
                             NgayHuyKichHoat = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgayKichHoat = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(5060),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(4824),
-                            Ngayvaoso = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(5288),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(8712),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(8478),
+                            Ngayvaoso = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(8939),
                             Port_Internalgate = 80,
                             Port_Ungdung = 80,
                             TenUngdung = "CĐ-ĐH",
@@ -1185,9 +1185,9 @@ namespace AMGAPI.Migrations
                             IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"),
                             NgayHuyKichHoat = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgayKichHoat = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ngaysua = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6003),
-                            Ngaytao = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6001),
-                            Ngayvaoso = new DateTime(2022, 10, 14, 1, 27, 3, 742, DateTimeKind.Utc).AddTicks(6004),
+                            Ngaysua = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(9661),
+                            Ngaytao = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(9659),
+                            Ngayvaoso = new DateTime(2022, 10, 22, 8, 22, 5, 789, DateTimeKind.Utc).AddTicks(9662),
                             Port_Internalgate = 80,
                             Port_Ungdung = 80,
                             TenUngdung = "CĐN",
@@ -1235,6 +1235,9 @@ namespace AMGAPI.Migrations
                     b.Property<int>("TansuatQuet_Phut")
                         .HasColumnType("int");
 
+                    b.Property<bool>("TrangThaiSMS")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("ThongsoHethong");
@@ -1243,14 +1246,15 @@ namespace AMGAPI.Migrations
                         new
                         {
                             Id = new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"),
-                            CreateDate = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(1794),
+                            CreateDate = new DateTime(2022, 10, 22, 8, 22, 5, 788, DateTimeKind.Utc).AddTicks(6164),
                             Datadiode_IP = "1.1.1.1",
                             Datadiode_Port = 5033,
                             Datadiode_Token = "123",
                             KichthuocFilesMax = 5120.0,
-                            ModifiedDate = new DateTime(2022, 10, 14, 1, 27, 3, 741, DateTimeKind.Utc).AddTicks(2055),
+                            ModifiedDate = new DateTime(2022, 10, 22, 8, 22, 5, 788, DateTimeKind.Utc).AddTicks(6418),
                             TanSuatXoanhatky_ngay = 1.0,
-                            TansuatQuet_Phut = 10
+                            TansuatQuet_Phut = 10,
+                            TrangThaiSMS = true
                         });
                 });
 

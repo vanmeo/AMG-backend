@@ -19,7 +19,7 @@ namespace AMGAPI.Data
          new Canbo() { Id = new Guid("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), Tendangnhap = "admin", Matkhau = "1", Tendaydu = "Admin", Dienthoai_mobile = "0123456789", CapbacId = Guid.Parse("3f7eb3c4-28b0-48f4-bda4-08da44746177"), ChucvuId = Guid.Parse("3509de02-52dd-4ba7-e244-08da44747730"), DonviId = Guid.Parse("07ca1673-4e6c-448e-8f65-a1ef3b65717b"), RoleId = Guid.Parse("830da2e4-c293-4026-b2e6-29ad8c935def") }
          );
             modelBuilder.Entity<ThongsoHethong>().HasData(
-          new ThongsoHethong() { Id = new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), TansuatQuet_Phut = 10, TanSuatXoanhatky_ngay = 1, Datadiode_IP = "1.1.1.1", Datadiode_Port = 5033, Datadiode_Token = "123", KichthuocFilesMax = 5120, CreateDate = DateTime.UtcNow, ModifiedDate = DateTime.UtcNow }
+          new ThongsoHethong() { Id = new Guid("9645cf84-11af-485f-8b90-fd34f3d7f26a"), TansuatQuet_Phut = 10, TanSuatXoanhatky_ngay = 1, Datadiode_IP = "1.1.1.1", Datadiode_Port = 5033, Datadiode_Token = "123", KichthuocFilesMax = 5120, CreateDate = DateTime.UtcNow, ModifiedDate = DateTime.UtcNow,TrangThaiSMS=true }
           );
             modelBuilder.Entity<Dangkykenh>().HasData(
               new Dangkykenh() { Id = new Guid("e0f582de-420f-4902-8cee-cf85389cc6bf"), TenNguoidangky = "Đc Vân", IdDonvi = new Guid("574b452c-b586-499b-d7b9-08da44749b96"), TenUngdung = "CĐ-ĐH", ID_Canbodangky = Guid.Parse("fe3cad63-5187-4f4b-adaa-798ff932b5c4"), IP_Ungdung = "10.10.10.1", Port_Ungdung = 80, UngdungId = Guid.Parse("5f606928-41d0-4b2d-a251-56ed76e1dffd"), Trangthai = 0, Ngaytao = DateTime.UtcNow, Ngaysua = DateTime.UtcNow, is_Delete = false, Ngayduyet = DateTime.UtcNow },
